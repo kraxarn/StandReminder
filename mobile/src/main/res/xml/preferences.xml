@@ -63,7 +63,8 @@
 			android:icon="@drawable/ic_flag"
 			android:title="@string/goal_hour"
 			android:summary="@string/goal_hour_info"
-			android:inputType="number"/>
+			android:inputType="number"
+			android:defaultValue="12"/>
 
 		<SwitchPreference
 			android:key="goal_remind_after"
