@@ -8,6 +8,7 @@ import android.view.View;
 
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
+import androidx.preference.PreferenceCategory;
 import androidx.preference.PreferenceFragmentCompat;
 
 import com.crow.stand_reminder.BuildConfig;
@@ -64,10 +65,11 @@ public class SettingsFragment extends PreferenceFragmentCompat
 			new Thread(() ->
 			{
 				List<Node> nodes = WearTools.getNodes(getContext());
-				if (nodes == null || nodes.size() == 0)
+				if (nodes == null || nodes.size() == 1)
 				{
-					if (getActivity() != null)
-						getActivity().runOnUiThread(() -> wearDevice.setEnabled(false));
+					PreferenceCategory wearCategory = findPreference("category_wear");
+					if (getActivity() != null && wearCategory != null)
+						getActivity().runOnUiThread(() -> wearCategory.setEnabled(false));
 					return;
 				}
 

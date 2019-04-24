@@ -27,6 +27,7 @@
 
 	<!-- Wear -->
 	<PreferenceCategory
+		android:key="category_wear"
 		android:title="@string/title_wear">
 
 		<ListPreference
