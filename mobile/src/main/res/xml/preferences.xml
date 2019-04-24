@@ -1,0 +1,138 @@
+<PreferenceScreen
+	xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<!-- General -->
+	<PreferenceCategory
+		android:title="General">
+
+		<ListPreference
+			android:key="general_theme"
+			android:title="@string/general_theme"
+			android:summary="@string/general_theme_info"
+			android:entries="@array/general_theme_options"
+			android:entryValues="@array/general_theme_values"
+			android:defaultValue="auto"/>
+
+		<ListPreference
+			android:key="battery_frequency"
+			android:title="@string/battery_frequency"
+			android:summary="@string/battery_frequency_info"
+			android:entries="@array/battery_frequency_options"
+			android:entryValues="@array/battery_frequency_values"
+			android:defaultValue="2"/>
+
+	</PreferenceCategory>
+
+	<!-- Wear -->
+	<PreferenceCategory
+		android:title="@string/title_wear">
+
+		<ListPreference
+			android:key="wear_update"
+			android:title="@string/wear_update"
+			android:summary="@string/wear_update_info"
+			android:entries="@array/wear_update_options"
+			android:entryValues="@array/wear_update_values"
+			android:defaultValue="2"/>
+
+		<!-- TODO -->
+		<ListPreference
+			android:key="wear_device"
+			android:title="@string/wear_device"
+			android:summary="@string/wear_device_info"/>
+
+		<SwitchPreference
+			android:key="wear_use_only"
+			android:title="@string/wear_use_only"
+			android:summary="@string/wear_use_only_info"/>
+
+	</PreferenceCategory>
+
+	<!-- Goal -->
+	<PreferenceCategory
+		android:title="@string/title_goal">
+
+		<!-- TODO -->
+		<EditTextPreference
+			android:key="goal_hour"
+			android:title="@string/goal_hour"
+			android:summary="@string/goal_hour_info"
+			android:inputType="number"/>
+
+		<SwitchPreference
+			android:key="goal_remind_after"
+			android:title="@string/goal_remind_after"
+			android:summary="@string/goal_remind_after_info"/>
+
+		<ListPreference
+			android:key="goal_interval"
+			android:title="@string/goal_interval"
+			android:summary="@string/goal_interval_info"
+			android:entries="@array/goal_interval_options"
+			android:entryValues="@array/goal_interval_values"
+			android:defaultValue="60"/>
+
+	</PreferenceCategory>
+
+	<!-- Notification -->
+	<PreferenceCategory
+		android:title="@string/title_notification">
+
+		<ListPreference
+			android:key="notification_remind"
+			android:title="@string/notification_remind"
+			android:summary="@string/notification_remind_info"
+			android:entries="@array/notification_remind_options"
+			android:entryValues="@array/notification_remind_values"
+			android:defaultValue="30"/>
+
+		<ListPreference
+			android:key="notification_second_remind"
+			android:title="@string/notification_second_remind"
+			android:summary="@string/notification_second_remind_info"
+			android:entries="@array/notification_second_remind_options"
+			android:entryValues="@array/notification_second_remind_values"
+			android:defaultValue="50"/>
+
+		<EditTextPreference
+			android:key="notification_remind_message"
+			android:title="@string/notification_remind_message"
+			android:summary="@string/notification_remind_message_info"/>
+
+		<EditTextPreference
+			android:key="notification_second_remind_message"
+			android:title="@string/notification_second_remind_message"
+			android:summary="@string/notification_second_remind_message_info"/>
+
+		<EditTextPreference
+			android:key="notification_completed_message"
+			android:title="@string/notification_completed_message"
+			android:summary="@string/notification_completed_message_info"/>
+
+		<EditTextPreference
+			android:key="notification_completed_remind_message"
+			android:title="@string/notification_completed_remind_message"
+			android:summary="@string/notification_completed_remind_message_info"/>
+
+	</PreferenceCategory>
+
+	<!-- Sensor -->
+	<PreferenceCategory
+		android:title="@string/title_sensor">
+
+		<ListPreference
+			android:key="sensor_sensitivity"
+			android:title="@string/sensor_sensitivity"
+			android:summary="@string/sensor_sensitivity_info"
+			android:entries="@array/sensor_sensitivity_options"
+			android:entryValues="@array/sensor_sensitivity_values"
+			android:defaultValue="75"/>
+
+		<SwitchPreference
+			android:key="sensor_use_gravity"
+			android:title="@string/sensor_use_gravity"
+			android:summary="@string/sensor_use_gravity_info"/>
+
+	</PreferenceCategory>
+
+</PreferenceScreen>

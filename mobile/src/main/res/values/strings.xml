@@ -1,3 +1,163 @@
 <resources>
+	<!-- App name -->
 	<string name="app_name">Stand Reminder</string>
+	
+	<!-- Navigation titles -->
+	<string name="title_home">Home</string>
+	<string name="title_history">Journal</string>
+	<string name="title_settings">Settings</string>
+	
+	<!-- Settings -->
+	<string name="title_general">General</string>
+	<string name="general_theme">Theme</string>
+	<string name="general_theme_info">
+		What theme to use for the app
+	</string>
+	<string-array name="general_theme_options">
+		<item>Auto (default)</item>
+		<item>Day</item>
+		<item>Night</item>
+		<item>Midnight</item>
+	</string-array>
+	<string-array name="general_theme_values">
+		<item>auto</item>
+		<item>day</item>
+		<item>night</item>
+		<item>midnight</item>
+	</string-array>
+	<string name="title_wear">Wear</string>
+	<string name="wear_update">Wear update frequency</string>
+	<string name="wear_update_info">
+		How many times the main device has to report a
+		sitting state before checking the Wear device
+	</string>
+	<string-array name="wear_update_options">
+		<item>1x</item>
+		<item>2x (default)</item>
+		<item>3x</item>
+	</string-array>
+	<string-array name="wear_update_values">
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+	</string-array>
+	<string name="wear_device">Device to use</string>
+	<string name="wear_device_info">
+		Which paired Wear device to use
+	</string>
+	<string name="wear_use_only">Only use Wear device</string>
+	<string name="wear_use_only_info">
+		Only use the Wear device for checking, usually
+		the main device is used first to save battery
+	</string>
+	<string name="title_goal">Goal</string>
+	<string name="goal_hour">Hours</string>
+	<string name="goal_hour_info">
+		Number of hours to set the goal to for each day
+	</string>
+	<string name="goal_remind_after">Remind after goal completion</string>
+	<string name="goal_remind_after_info">
+		Keep reminding to stand up, even after the goal has been reached
+	</string>
+	<string name="goal_interval">Interval</string>
+	<string name="goal_interval_info">
+		How often you want to be reminded to stand up
+	</string>
+	<string-array name="goal_interval_options">
+		<item>30 minutes</item>
+		<item>1 hour (default)</item>
+		<item>2 hours</item>
+	</string-array>
+	<string-array name="goal_interval_values">
+		<item>30</item>
+		<item>60</item>
+		<item>120</item>
+	</string-array>
+	<string name="title_notification">Notifications</string>
+	<string name="notification_remind">Reminder time</string>
+	<string name="notification_remind_info">
+		At what time you want to be reminded to stand up
+	</string>
+	<string-array name="notification_remind_options">
+		<item>:30</item>
+		<item>:40</item>
+		<item>:50</item>
+	</string-array>
+	<string-array name="notification_remind_values">
+		<item>30</item>
+		<item>40</item>
+		<item>50</item>
+	</string-array>
+	<string name="notification_second_remind">Second reminder time</string>
+	<string name="notification_second_remind_info">
+		At what time you want to get a second reminder if the
+		first one failed
+	</string>
+	<string-array name="notification_second_remind_options">
+		<item>:40</item>
+		<item>:50</item>
+		<item>:55</item>
+	</string-array>
+	<string-array name="notification_second_remind_values">
+		<item>40</item>
+		<item>50</item>
+		<item>55</item>
+	</string-array>
+	<string name="notification_remind_message">Reminder message</string>
+	<string name="notification_remind_message_info">
+		Message to show in the notification when being reminded
+	</string>
+	<string name="notification_second_remind_message">Second reminder message</string>
+	<string name="notification_second_remind_message_info">
+		Message to show in the notification when being reminded
+		for the second time
+	</string>
+	<string name="notification_completed_message">Completed message</string>
+	<string name="notification_completed_message_info">
+		Message to show in the notification when the goal
+		has been reached
+	</string>
+	<string name="notification_completed_remind_message">Reminder message after goal</string>
+	<string name="notification_completed_remind_message_info">
+		Message to show in the notification when reminding to stand up
+		after the goal has been reached
+	</string>
+	<string name="title_sensor">Sensor</string>
+	<string name="sensor_sensitivity">Sensitivity</string>
+	<string name="sensor_sensitivity_info">
+		How sensitive the sensor should be to detect standing up, the higher
+		the sensitivity, the more counts as standing up
+	</string>
+	<string-array name="sensor_sensitivity_options">
+		<item>Low</item>
+		<item>Default</item>
+		<item>High</item>
+	</string-array>
+	<string-array name="sensor_sensitivity_values">
+		<item>90</item>
+		<item>75</item>
+		<item>50</item>
+	</string-array>
+	<string name="sensor_use_gravity">Force gravity sensor</string>
+	<string name="sensor_use_gravity_info">
+		Use the gravity sensor instead of the accelerometer
+	</string>
+	<string name="title_battery">Battery</string>
+	<string name="battery_frequency">Update frequency</string>
+	<string name="battery_frequency_info">
+		How often the application should check if you are
+		standing up
+	</string>
+	<string-array name="battery_frequency_options">
+		<item>1 minute</item>
+		<item>2 minutes (default)</item>
+		<item>5 minutes</item>
+		<item>10 minutes</item>
+	</string-array>
+	<string-array name="battery_frequency_values">
+		<item>1</item>
+		<item>2</item>
+		<item>5</item>
+		<item>10</item>
+	</string-array>
 </resources>
