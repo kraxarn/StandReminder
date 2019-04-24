@@ -57,13 +57,18 @@
 	<PreferenceCategory
 		android:title="@string/title_goal">
 
-		<!-- TODO -->
+		<!--
+			TODO
+			There's currently a bug with the
+			Android support library which prevents
+			numeric entry from working correctly
+		-->
 		<EditTextPreference
 			android:key="goal_hour"
 			android:icon="@drawable/ic_flag"
 			android:title="@string/goal_hour"
 			android:summary="@string/goal_hour_info"
-			android:inputType="number"
+			android:inputType="numberSigned"
 			android:defaultValue="12"/>
 
 		<SwitchPreference
