@@ -1,12 +1,14 @@
-package com.crow.stand_reminder;
+package com.crow.stand_reminder.tool;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-class NavigationTools
+import com.crow.stand_reminder.R;
+
+public class NavigationTools
 {
-	static void setFragment(FragmentManager manager, Fragment fragment)
+	public static void setFragment(FragmentManager manager, Fragment fragment)
 	{
 		FragmentTransaction transaction = manager.beginTransaction();
 		// Set custom animation here if you're feeling fancy
