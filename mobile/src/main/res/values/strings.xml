@@ -122,6 +122,10 @@
 		Message to show in the notification when reminding to stand up
 		after the goal has been reached
 	</string>
+	<string name="notification_settings">Notification settings</string>
+	<string name="notification_settings_info">
+		Enable or disable notification, change sound and priority etc.
+	</string>
 	<string name="title_sensor">Sensor</string>
 	<string name="sensor_sensitivity">Sensitivity</string>
 	<string name="sensor_sensitivity_info">

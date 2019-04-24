@@ -105,6 +105,12 @@
 			android:entryValues="@array/notification_second_remind_values"
 			android:defaultValue="50"/>
 
+		<Preference
+			android:key="notification_settings"
+			android:icon="@drawable/ic_message"
+			android:title="@string/notification_settings"
+			android:summary="@string/notification_settings_info"/>
+
 		<EditTextPreference
 			android:key="notification_remind_message"
 			android:icon="@drawable/ic_message"
