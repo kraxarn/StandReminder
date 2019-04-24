@@ -164,4 +164,5 @@
 		<item>5</item>
 		<item>10</item>
 	</string-array>
+	<string name="title_about">About</string>
 </resources>

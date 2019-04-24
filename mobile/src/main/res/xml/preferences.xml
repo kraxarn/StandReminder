@@ -134,4 +134,15 @@
 
 	</PreferenceCategory>
 
+	<!-- About -->
+	<PreferenceCategory
+		android:title="@string/title_about">
+
+		<Preference
+			android:key="about_version"
+			android:icon="@drawable/ic_info"
+			android:title="v1.0"/>
+
+	</PreferenceCategory>
+
 </PreferenceScreen>

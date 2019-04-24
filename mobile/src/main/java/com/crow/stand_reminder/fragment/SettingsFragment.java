@@ -8,7 +8,10 @@ import android.provider.Settings;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
+import com.crow.stand_reminder.BuildConfig;
 import com.crow.stand_reminder.R;
+
+import java.util.Locale;
 
 public class SettingsFragment extends PreferenceFragmentCompat
 {
@@ -24,6 +27,7 @@ public class SettingsFragment extends PreferenceFragmentCompat
 	{
 		addPreferencesFromResource(R.xml.preferences);
 
+		// Set click event for notification settings
 		setOnPreferenceClickListener("notification_settings", preference ->
 		{
 			Intent intent;
@@ -48,5 +52,14 @@ public class SettingsFragment extends PreferenceFragmentCompat
 
 			return true;
 		});
+
+		// Set correct version info
+		Preference version = findPreference("about_version");
+		if (version != null)
+		{
+			version.setTitle(BuildConfig.VERSION_NAME);
+			if (BuildConfig.BUILD_TYPE.equals("debug"))
+				version.setSummary("Debug build");
+		}
 	}
 }
