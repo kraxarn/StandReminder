@@ -111,30 +111,6 @@
 			android:title="@string/notification_settings"
 			android:summary="@string/notification_settings_info"/>
 
-		<EditTextPreference
-			android:key="notification_remind_message"
-			android:icon="@drawable/ic_message"
-			android:title="@string/notification_remind_message"
-			android:summary="@string/notification_remind_message_info"/>
-
-		<EditTextPreference
-			android:key="notification_second_remind_message"
-			android:icon="@drawable/ic_message"
-			android:title="@string/notification_second_remind_message"
-			android:summary="@string/notification_second_remind_message_info"/>
-
-		<EditTextPreference
-			android:key="notification_completed_message"
-			android:icon="@drawable/ic_message"
-			android:title="@string/notification_completed_message"
-			android:summary="@string/notification_completed_message_info"/>
-
-		<EditTextPreference
-			android:key="notification_completed_remind_message"
-			android:icon="@drawable/ic_message"
-			android:title="@string/notification_completed_remind_message"
-			android:summary="@string/notification_completed_remind_message_info"/>
-
 	</PreferenceCategory>
 
 	<!-- Sensor -->
