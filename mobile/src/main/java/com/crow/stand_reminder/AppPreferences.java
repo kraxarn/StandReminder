@@ -86,16 +86,6 @@ public class AppPreferences extends PreferenceDataStore
 		return getBoolean("goal_remind_after", false);
 	}
 
-	/**
-	 * How long each interval for reminders is
-	 * (very likely to be removed in the near future)
-	 */
-	@Deprecated
-	public int getGoalInterval()
-	{
-		return getInt("goal_interval", 60);
-	}
-
 	// endregion
 
 	// region Notifications

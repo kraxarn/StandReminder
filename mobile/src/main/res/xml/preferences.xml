@@ -77,15 +77,6 @@
 			android:title="@string/goal_remind_after"
 			android:summary="@string/goal_remind_after_info"/>
 
-		<ListPreference
-			android:key="goal_interval"
-			android:icon="@drawable/ic_av_timer"
-			android:title="@string/goal_interval"
-			android:summary="@string/goal_interval_info"
-			android:entries="@array/goal_interval_options"
-			android:entryValues="@array/goal_interval_values"
-			android:defaultValue="60"/>
-
 	</PreferenceCategory>
 
 	<!-- Notification -->
