@@ -65,7 +65,7 @@ public class SettingsFragment extends PreferenceFragmentCompat
 			new Thread(() ->
 			{
 				List<Node> nodes = WearTools.getNodes(getContext());
-				if (nodes == null || nodes.size() == 1)
+				if (nodes == null || nodes.size() == 0)
 				{
 					PreferenceCategory wearCategory = findPreference("category_wear");
 					if (getActivity() != null && wearCategory != null)
