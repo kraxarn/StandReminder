@@ -7,6 +7,7 @@
 
 		<ListPreference
 			android:key="general_theme"
+			android:icon="@drawable/ic_palette"
 			android:title="@string/general_theme"
 			android:summary="@string/general_theme_info"
 			android:entries="@array/general_theme_options"
@@ -15,6 +16,7 @@
 
 		<ListPreference
 			android:key="battery_frequency"
+			android:icon="@drawable/ic_update"
 			android:title="@string/battery_frequency"
 			android:summary="@string/battery_frequency_info"
 			android:entries="@array/battery_frequency_options"
@@ -29,6 +31,7 @@
 
 		<ListPreference
 			android:key="wear_update"
+			android:icon="@drawable/ic_watch_export"
 			android:title="@string/wear_update"
 			android:summary="@string/wear_update_info"
 			android:entries="@array/wear_update_options"
@@ -38,11 +41,13 @@
 		<!-- TODO -->
 		<ListPreference
 			android:key="wear_device"
+			android:icon="@drawable/ic_watch"
 			android:title="@string/wear_device"
 			android:summary="@string/wear_device_info"/>
 
 		<SwitchPreference
 			android:key="wear_use_only"
+			android:icon="@drawable/ic_phone_off"
 			android:title="@string/wear_use_only"
 			android:summary="@string/wear_use_only_info"/>
 
@@ -55,17 +60,20 @@
 		<!-- TODO -->
 		<EditTextPreference
 			android:key="goal_hour"
+			android:icon="@drawable/ic_flag"
 			android:title="@string/goal_hour"
 			android:summary="@string/goal_hour_info"
 			android:inputType="number"/>
 
 		<SwitchPreference
 			android:key="goal_remind_after"
+			android:icon="@drawable/ic_bell"
 			android:title="@string/goal_remind_after"
 			android:summary="@string/goal_remind_after_info"/>
 
 		<ListPreference
 			android:key="goal_interval"
+			android:icon="@drawable/ic_av_timer"
 			android:title="@string/goal_interval"
 			android:summary="@string/goal_interval_info"
 			android:entries="@array/goal_interval_options"
@@ -80,6 +88,7 @@
 
 		<ListPreference
 			android:key="notification_remind"
+			android:icon="@drawable/ic_alarm"
 			android:title="@string/notification_remind"
 			android:summary="@string/notification_remind_info"
 			android:entries="@array/notification_remind_options"
@@ -88,6 +97,7 @@
 
 		<ListPreference
 			android:key="notification_second_remind"
+			android:icon="@drawable/ic_alarm_multiple"
 			android:title="@string/notification_second_remind"
 			android:summary="@string/notification_second_remind_info"
 			android:entries="@array/notification_second_remind_options"
@@ -96,21 +106,25 @@
 
 		<EditTextPreference
 			android:key="notification_remind_message"
+			android:icon="@drawable/ic_message"
 			android:title="@string/notification_remind_message"
 			android:summary="@string/notification_remind_message_info"/>
 
 		<EditTextPreference
 			android:key="notification_second_remind_message"
+			android:icon="@drawable/ic_message"
 			android:title="@string/notification_second_remind_message"
 			android:summary="@string/notification_second_remind_message_info"/>
 
 		<EditTextPreference
 			android:key="notification_completed_message"
+			android:icon="@drawable/ic_message"
 			android:title="@string/notification_completed_message"
 			android:summary="@string/notification_completed_message_info"/>
 
 		<EditTextPreference
 			android:key="notification_completed_remind_message"
+			android:icon="@drawable/ic_message"
 			android:title="@string/notification_completed_remind_message"
 			android:summary="@string/notification_completed_remind_message_info"/>
 
@@ -122,6 +136,7 @@
 
 		<ListPreference
 			android:key="sensor_sensitivity"
+			android:icon="@drawable/ic_leak_add"
 			android:title="@string/sensor_sensitivity"
 			android:summary="@string/sensor_sensitivity_info"
 			android:entries="@array/sensor_sensitivity_options"
@@ -130,6 +145,7 @@
 
 		<SwitchPreference
 			android:key="sensor_use_gravity"
+			android:icon="@drawable/ic_rotate_left"
 			android:title="@string/sensor_use_gravity"
 			android:summary="@string/sensor_use_gravity_info"/>
 
