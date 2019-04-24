@@ -29,7 +29,6 @@
 	<PreferenceCategory
 		android:title="@string/title_wear">
 
-		<!-- TODO -->
 		<ListPreference
 			android:key="wear_device"
 			android:icon="@drawable/ic_watch"
