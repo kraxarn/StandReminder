@@ -29,6 +29,13 @@
 	<PreferenceCategory
 		android:title="@string/title_wear">
 
+		<!-- TODO -->
+		<ListPreference
+			android:key="wear_device"
+			android:icon="@drawable/ic_watch"
+			android:title="@string/wear_device"
+			android:summary="@string/wear_device_info"/>
+
 		<ListPreference
 			android:key="wear_update"
 			android:icon="@drawable/ic_watch_export"
@@ -37,13 +44,6 @@
 			android:entries="@array/wear_update_options"
 			android:entryValues="@array/wear_update_values"
 			android:defaultValue="2"/>
-
-		<!-- TODO -->
-		<ListPreference
-			android:key="wear_device"
-			android:icon="@drawable/ic_watch"
-			android:title="@string/wear_device"
-			android:summary="@string/wear_device_info"/>
 
 		<SwitchPreference
 			android:key="wear_use_only"
