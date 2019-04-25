@@ -92,7 +92,10 @@
 				android:layout_height="wrap_content"
 				android:textSize="@dimen/text_h5"
 				android:text="Hours today"/>
-
+			<!--
+				TODO: Scrollable content in a card is against the material design guidelines!
+				(possible only show nearby hours, smaller, and click to show all)
+			-->
 			<androidx.recyclerview.widget.RecyclerView
 				android:id="@+id/list_hour_entries"
 				android:layout_marginTop="16dp"
