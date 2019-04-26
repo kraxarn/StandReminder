@@ -75,7 +75,7 @@ public class AppPreferences extends PreferenceDataStore
 	 */
 	public int getGoalHours()
 	{
-		return getInt("goal_hour", 12);
+		return Integer.parseInt(getString("goal_hour", "12"));
 	}
 
 	/**
