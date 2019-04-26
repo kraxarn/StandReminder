@@ -68,15 +68,15 @@ public class HistoryFragment extends Fragment
 
 		for (int i = 0; i < 10000; i++)
 			if (random.nextInt(2) == 0)
-				entries.add(new JournalEntry(String.format(Locale.getDefault(), "%s-%s-%s",
+				entries.add(new JournalEntry(getContext(),
+					String.format(Locale.getDefault(), "%s-%s-%s",
 						df4.format(random.nextInt(100) + 2000),
 						df2.format(random.nextInt(12)),
 						df2.format(random.nextInt(31))),
 					random.nextInt(24),
 					String.format("%s:00-%s:00",
 						df2.format(random.nextInt(12)),
-						df2.format(random.nextInt(12))),
-					getContext().getDrawable(getRandomEmoticon(random))));
+						df2.format(random.nextInt(12)))));
 
 		return entries;
 	}
