@@ -41,7 +41,9 @@ public class JournalAdapter extends RecyclerView.Adapter
 		JournalViewHolder viewHolder = (JournalViewHolder) holder;
 
 		viewHolder.textDate.setText(entry.date);
-		viewHolder.textHours.setText(String.format(Locale.getDefault(), "%d hours", entry.hours));
+		viewHolder.textHours.setText(String.format(Locale.getDefault(), "%d %s",
+				entry.hours,
+				entry.hours == 1 ? "hour" : "hours"));
 		viewHolder.textTimeSpan.setText(entry.timeSpan);
 		viewHolder.imageEmoticon.setImageDrawable(entry.emoticon);
 	}
