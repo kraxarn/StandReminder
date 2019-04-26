@@ -5,6 +5,7 @@ import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
 import com.crow.stand_reminder.fragment.HistoryFragment;
@@ -26,6 +27,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
+		// Set navigation bar color
+		getWindow().setNavigationBarColor(ResourcesCompat.getColor(getResources(), R.color.colorPrimary, null));
 
 		// Preload all fragments
 		homeFragment     = new HomeFragment();
