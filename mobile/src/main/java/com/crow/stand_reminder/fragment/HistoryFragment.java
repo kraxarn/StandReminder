@@ -66,8 +66,7 @@ public class HistoryFragment extends Fragment
 		DecimalFormat df4 = new DecimalFormat("0000");
 		DecimalFormat df2 = new DecimalFormat("00");
 
-		for (int i = 0; i < 10000; i++)
-			if (random.nextInt(2) == 0)
+		for (int i = 0; i < 2000; i++)
 				entries.add(new JournalEntry(getContext(),
 					String.format(Locale.getDefault(), "%s-%s-%s",
 						df4.format(random.nextInt(100) + 2000),
