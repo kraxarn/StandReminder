@@ -57,6 +57,15 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"/>
 
+			<GridView
+				android:id="@+id/list_hour_chips_grid"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:numColumns="5"
+				android:stretchMode="columnWidth"
+				android:horizontalSpacing="8dp"
+				android:verticalSpacing="8dp"/>
+
 		</LinearLayout>
 
 	</androidx.cardview.widget.CardView>

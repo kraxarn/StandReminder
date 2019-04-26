@@ -60,6 +60,7 @@ public class HomeFragment extends Fragment
 		// Testing
 		setProgress(40);
 		fillHourEntries();
+		fillHourChipsAsGridView();
 
 		return view;
 	}
@@ -114,7 +115,15 @@ public class HomeFragment extends Fragment
 		hourChips.setAdapter(hourChipAdapter);
 		hourChips.setLayoutManager(layoutManager);
 	}
-	
+
+	private void fillHourChipsAsGridView()
+	{
+		GridView hourChips = view.findViewById(R.id.list_hour_chips_grid);
+		HourChipListAdapter adapter = new HourChipListAdapter(getRandomHourChips());
+
+		hourChips.setAdapter(adapter);
+	}
+
 	private void setProgress(int progress)
 	{
 		ObjectAnimator animator = ObjectAnimator.ofInt(progressBarCircular,
