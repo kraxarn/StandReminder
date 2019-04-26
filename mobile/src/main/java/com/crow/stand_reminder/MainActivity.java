@@ -12,6 +12,7 @@ import com.crow.stand_reminder.fragment.HistoryFragment;
 import com.crow.stand_reminder.fragment.HomeFragment;
 import com.crow.stand_reminder.fragment.SettingsFragment;
 import com.crow.stand_reminder.list.hourEntry.HourEntryAdapter;
+import com.crow.stand_reminder.service.OngoingNotificationManager;
 import com.crow.stand_reminder.tool.NavigationTools;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -44,6 +45,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
 		// Set density for hour entries
 		HourEntryAdapter.densityDpi = getResources().getDisplayMetrics().density;
+
+		// Create persistent notification
+		OngoingNotificationManager.create(this);
 	}
 
 	private Fragment getFragmentFromId(int id)
