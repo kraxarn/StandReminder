@@ -5,5 +5,5 @@
 	<color name="colorPrimaryDark">#005662</color>
 	<color name="colorAccent">#c2185b</color>
 	<!-- Drawable colors -->
-	<color name="colorEmoticon">@color/colorPrimary</color>
+	<color name="colorEmoticon">#bdbdbd</color>
 </resources>
