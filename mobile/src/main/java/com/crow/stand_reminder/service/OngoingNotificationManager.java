@@ -22,6 +22,7 @@ public class OngoingNotificationManager
 	public static void create(Context context)
 	{
 		// Just create a notification channel, don't show anything yet
+		// TODO: NO
 		NotificationTools.createNotificationChannel(context, channelId, name, Notification.PRIORITY_DEFAULT);
 		// Enabled
 		enabled = true;
@@ -50,5 +51,15 @@ public class OngoingNotificationManager
 	{
 		NotificationManagerCompat.from(context).cancel(notificationId);
 		enabled = false;
+	}
+
+	public static int getNotificationId()
+	{
+		return notificationId;
+	}
+
+	public static String getChannelId()
+	{
+		return channelId;
 	}
 }
