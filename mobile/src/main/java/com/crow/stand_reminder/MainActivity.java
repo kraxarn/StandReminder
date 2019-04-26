@@ -45,9 +45,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
 		// Set density for hour entries
 		HourEntryAdapter.densityDpi = getResources().getDisplayMetrics().density;
-
-		// Create persistent notification
-		OngoingNotificationManager.create(this);
 	}
 
 	private Fragment getFragmentFromId(int id)
