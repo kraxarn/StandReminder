@@ -59,32 +59,9 @@ public class HomeFragment extends Fragment
 
 		// Testing
 		setProgress(40);
-		fillHourEntries();
 		fillHourChipsAsGridView();
 
 		return view;
-	}
-
-	private void fillHourEntries()
-	{
-		// Test entries
-		int defaultColor = ResourcesCompat.getColor(getResources(), R.color.colorPrimary,        null);
-		int noColor      = ResourcesCompat.getColor(getResources(), android.R.color.transparent, null);
-		ArrayList<HourEntry> entries = new ArrayList<>();
-		Random rng = new Random();
-		for (int i = 0; i < 24; i++)
-			entries.add(new HourEntry(rng.nextInt(2) == 0 ? defaultColor : noColor,
-					String.format(Locale.getDefault(), "%s:00",
-							new DecimalFormat("00").format(i)),
-					i == 0 ? 0 : 8));
-
-		RecyclerView hourEntries = view.findViewById(R.id.list_hour_entries);
-		HourEntryAdapter hourEntryAdapter = new HourEntryAdapter(entries);
-
-		hourEntries.setAdapter(hourEntryAdapter);
-		hourEntries.setLayoutManager(new LinearLayoutManager(getContext(),
-				LinearLayoutManager.HORIZONTAL,
-				false));
 	}
 
 	private ArrayList<HourChip> getRandomHourChips()
