@@ -1,11 +1,8 @@
 package com.crow.stand_reminder.service
 
-import android.app.Notification
 import android.content.Context
-
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-
 import com.crow.stand_reminder.R
 import com.crow.stand_reminder.tool.NotificationTools
 
@@ -23,7 +20,7 @@ object OngoingNotificationManager
     {
         // Just create a notification channel, don't show anything yet
         // TODO: NO
-        NotificationTools.createNotificationChannel(context, channelId, name, Notification.PRIORITY_DEFAULT)
+        NotificationTools.createNotificationChannel(context, channelId, name, NotificationCompat.PRIORITY_DEFAULT)
         // Enabled
         enabled = true
     }
