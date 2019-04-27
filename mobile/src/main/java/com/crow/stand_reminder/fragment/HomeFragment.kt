@@ -38,7 +38,7 @@ class HomeFragment : Fragment()
 
             for (i in 0..23)
                 if (random.nextInt(2) == 0)
-                    chips.add(HourChip(String.format(Locale.getDefault(),"%s:00", DecimalFormat("00").format(i.toLong()))))
+					chips += HourChip("${DecimalFormat("00").format(i)}:00")
 
             return chips
         }
