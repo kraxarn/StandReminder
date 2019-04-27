@@ -6,7 +6,7 @@ import androidx.room.TypeConverters
 
 @Database(entities = [SensorValue::class], version = 1)
 @TypeConverters(DataConverter::class)
-abstract class Database : RoomDatabase()
+abstract class AppDatabase : RoomDatabase()
 {
     abstract fun values(): SensorValueDao
 }
