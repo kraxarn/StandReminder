@@ -12,7 +12,6 @@ import com.crow.stand_reminder.BuildConfig
 import com.crow.stand_reminder.R
 import com.crow.stand_reminder.tool.WearTools
 
-
 class SettingsFragment : PreferenceFragmentCompat()
 {
     private fun setOnPreferenceClickListener(key: String, listener: Preference.OnPreferenceClickListener)
@@ -48,11 +47,11 @@ class SettingsFragment : PreferenceFragmentCompat()
 
         // Fill list with wear devices
         val wearDevice = findPreference<ListPreference>("wear_device")
-        if (wearDevice != null)
+        if (wearDevice != null && context != null)
             Thread(Runnable
             {
-                val nodes = WearTools.getNodes(context)
-                if (nodes == null || nodes.size == 0)
+                val nodes = WearTools.getNodes(context!!)
+                if (nodes == null || nodes.isEmpty())
                 {
                     val wearCategory = findPreference<PreferenceCategory>("category_wear")
                     if (activity != null && wearCategory != null)
