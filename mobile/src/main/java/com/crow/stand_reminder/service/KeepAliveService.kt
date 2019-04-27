@@ -33,7 +33,7 @@ class KeepAliveService : Service()
             // TODO: For testing only, just save a value every minute
 
             // Get value and save in a different thread
-            Thread(Runnable(DatabaseTools(this)::saveValue))
+            DatabaseTools(this).saveValue()
 
             Log.i("SERVICE", "Starting foreground service...")
 
