@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 28
@@ -31,11 +33,19 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.preference:preference:1.1.0-alpha04'
     def room_version = '2.1.0-alpha07'
+    // Room for Java
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
+    // Room for Kotlin
+    implementation "androidx.room:room-ktx:$room_version"
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     wearApp project(':wear')
     implementation 'com.google.android.gms:play-services-wearable:16.0.1'
+    implementation 'androidx.core:core-ktx:1.0.1'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+repositories {
+    mavenCentral()
 }
