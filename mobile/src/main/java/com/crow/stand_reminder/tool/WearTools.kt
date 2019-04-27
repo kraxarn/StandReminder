@@ -1,6 +1,7 @@
 package com.crow.stand_reminder.tool
 
 import android.content.Context
+import android.util.Log
 import androidx.annotation.WorkerThread
 import com.google.android.gms.tasks.Tasks
 import com.google.android.gms.wearable.Node
@@ -20,7 +21,7 @@ object WearTools
 		}
 		catch (e: ExecutionException)
 		{
-			e.printStackTrace()
+			Log.w("WEAR", e.message)
 			null
 		}
 		catch (e: InterruptedException)
