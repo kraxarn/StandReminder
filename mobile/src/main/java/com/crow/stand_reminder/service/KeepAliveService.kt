@@ -91,6 +91,9 @@ class KeepAliveService : Service()
         const val ACTION_START_SERVICE = "ACTION_START_SERVICE"
         const val ACTION_STOP_SERVICE  = "ACTION_STOP_SERVICE"
 
+        fun isRunning() =
+                thread?.isAlive ?: false
+
         fun interrupt()
         {
             if (thread != null)
