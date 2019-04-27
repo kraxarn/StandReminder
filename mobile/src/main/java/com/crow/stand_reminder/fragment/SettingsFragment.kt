@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.widget.Toast
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
@@ -91,6 +92,16 @@ class SettingsFragment : PreferenceFragmentCompat()
         })
         setOnPreferenceClickListener("debug_stop_service", Preference.OnPreferenceClickListener {
             ServiceTools.stop(context!!)
+            true
+        })
+
+        // Delete all values
+        setOnPreferenceClickListener("debug_drop_database", Preference.OnPreferenceClickListener {
+            val toast = Toast.makeText(context!!, "Database dropped", Toast.LENGTH_SHORT)
+            Thread(Runnable {
+                DatabaseTools(context!!).drop()
+                toast.show()
+            }).start()
             true
         })
 
