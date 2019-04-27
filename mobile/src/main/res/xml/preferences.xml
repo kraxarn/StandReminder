@@ -142,6 +142,7 @@
 	</PreferenceCategory>
 
 	<!-- Debug stuff -->
+	<!-- TODO: Once out of beta, only show these for debug builds -->
 	<PreferenceCategory
 		android:title="Debugging">
 
@@ -164,6 +165,11 @@
 			android:key="debug_show_today"
 			android:title="Show all values for today"
 			android:summary="Show all values that has been recorded for today"/>
+
+		<Preference
+			android:key="debug_info"
+			android:title="Show debug info"
+			android:summary="Show general information useful for debugging and bug tracking"/>
 
 
 

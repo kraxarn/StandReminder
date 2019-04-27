@@ -21,6 +21,9 @@ interface SensorValueDao
     @Query("SELECT * FROM sensorValue WHERE value > :threshold OR value < -:threshold")
     fun getAllStanding(threshold: Float): List<SensorValue>
 
+    @get:Query("SELECT * FROM sensorValue ORDER BY added ASC")
+    val valuesAddedAsc: List<SensorValue>
+
     @Insert
     fun insertAll(vararg values: SensorValue)
 

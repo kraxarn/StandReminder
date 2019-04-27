@@ -11,6 +11,7 @@ import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceFragmentCompat
 import com.crow.stand_reminder.BuildConfig
 import com.crow.stand_reminder.R
+import com.crow.stand_reminder.service.KeepAliveService
 import com.crow.stand_reminder.tool.*
 import java.util.*
 
@@ -128,6 +129,24 @@ class SettingsFragment : PreferenceFragmentCompat()
                     AlertTools.showSimple(context!!, Date().toString(), builder.toString())
                 }
 			}).start()
+            true
+        })
+
+        // Debug info
+        setOnPreferenceClickListener("debug_info", Preference.OnPreferenceClickListener {
+            Thread(Runnable {
+                // Get database to show stuffs later
+                val db = DatabaseTools(context!!)
+                // Prepare message
+                val message = "ServiceRunning=${KeepAliveService.isRunning()}\n" +
+                        "FirstDate=${if (db.values().values.isEmpty()) { "Empty" } else { CalendarTools.format(db.values().valuesAddedAsc[0].added, CalendarTools.Format.DATE) }}\n" +
+                        "InstanceDate=${CalendarTools.format(Calendar.getInstance(), CalendarTools.Format.DATE)}"
+                // Show alert
+                activity?.runOnUiThread {
+                    AlertTools.showSimple(context!!, "Debug Info", message)
+                }
+            }).start()
+
             true
         })
     }
