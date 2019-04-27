@@ -5,12 +5,10 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
-
 import com.crow.stand_reminder.fragment.HistoryFragment
 import com.crow.stand_reminder.fragment.HomeFragment
 import com.crow.stand_reminder.fragment.SettingsFragment
 import com.crow.stand_reminder.list.hourEntry.HourEntryAdapter
-import com.crow.stand_reminder.service.OngoingNotificationManager
 import com.crow.stand_reminder.tool.NavigationTools
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
