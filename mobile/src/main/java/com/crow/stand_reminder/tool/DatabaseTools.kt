@@ -54,7 +54,8 @@ class DatabaseTools(private val context: Context) : Closeable
                 // We only want one value
                 sensorTools.sensorManager.unregisterListener(this)
                 // It's 1 on mobile, 0 on watch
-                saveValue(event.values[1])
+                // (it needs to be saved on another thread)
+                Thread(Runnable { saveValue(event.values[1]) }).start()
             }
 
             override fun onAccuracyChanged(sensor: Sensor, accuracy: Int)
