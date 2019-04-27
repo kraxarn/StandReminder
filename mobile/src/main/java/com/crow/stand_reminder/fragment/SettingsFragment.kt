@@ -10,6 +10,7 @@ import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceFragmentCompat
 import com.crow.stand_reminder.BuildConfig
 import com.crow.stand_reminder.R
+import com.crow.stand_reminder.tool.ServiceTools
 import com.crow.stand_reminder.tool.WearTools
 
 class SettingsFragment : PreferenceFragmentCompat()
@@ -82,5 +83,16 @@ class SettingsFragment : PreferenceFragmentCompat()
             if (BuildConfig.BUILD_TYPE == "debug")
                 version.summary = "Debug build"
         }
+
+        // Start and stop service
+        setOnPreferenceClickListener("debug_start_service", Preference.OnPreferenceClickListener {
+            ServiceTools.start(context!!)
+            true
+        })
+        setOnPreferenceClickListener("debug_stop_service", Preference.OnPreferenceClickListener {
+            ServiceTools.stop(context!!)
+            true
+        })
+
     }
 }
