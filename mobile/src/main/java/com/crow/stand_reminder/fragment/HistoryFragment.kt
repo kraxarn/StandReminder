@@ -35,15 +35,10 @@ class HistoryFragment : Fragment()
             val df2 = DecimalFormat("00")
 
             for (i in 0..2000)
-                entries.add(JournalEntry(context!!,
-                        String.format(Locale.getDefault(), "%s-%s-%s",
-                                df4.format((random.nextInt(100) + 2000).toLong()),
-                                df2.format(random.nextInt(12).toLong()),
-                                df2.format(random.nextInt(31).toLong())),
+                entries += JournalEntry(context,
+                        "${df4.format(random.nextInt(100) + 2000)}-${df2.format(random.nextInt(12))}-${df2.format(random.nextInt(31))}",
                         random.nextInt(24),
-                        String.format("%s:00-%s:00",
-                                df2.format(random.nextInt(12).toLong()),
-                                df2.format(random.nextInt(12).toLong()))))
+                        "${df2.format(random.nextInt(12))}:00-${df2.format(random.nextInt(12))}:00")
 
             return entries
         }

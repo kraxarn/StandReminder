@@ -25,8 +25,7 @@ class KeepAliveService : Service()
             try
             {
                 Thread.sleep(60000)
-                OngoingNotificationManager.update(this,
-                        String.format("Updated on %s", Calendar.getInstance()))
+                OngoingNotificationManager.update(this, "Updated on ${Calendar.getInstance()}")
             }
             catch (e: InterruptedException)
             {
