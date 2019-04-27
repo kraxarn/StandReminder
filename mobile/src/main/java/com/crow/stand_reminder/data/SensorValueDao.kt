@@ -18,6 +18,9 @@ interface SensorValueDao
     @Query("SELECT * FROM sensorValue WHERE added BETWEEN :from AND :to")
     fun getBetween(from: Calendar, to: Calendar): List<SensorValue>
 
+    @Query("SELECT * FROM sensorValue WHERE value > :threshold OR value < -:threshold")
+    fun getAllStanding(threshold: Float): List<SensorValue>
+
     @Insert
     fun insertAll(vararg values: SensorValue)
 
