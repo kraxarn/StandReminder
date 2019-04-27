@@ -4,6 +4,7 @@ import android.app.PendingIntent
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
+import android.util.Log
 import androidx.core.app.NotificationCompat
 
 import com.crow.stand_reminder.R
@@ -17,10 +18,24 @@ class KeepAliveService : Service()
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int
     {
+        when (intent.action)
+        {
+            ACTION_START_SERVICE -> start()
+            ACTION_STOP_SERVICE  -> stop()
+        }
+
+        return super.onStartCommand(intent, flags, startId)
+    }
+
+    private fun start()
+    {
         thread = Thread {
             // TODO: For testing only, just save a value every minute
 
-            DatabaseTools(this).saveValue()
+            // Get value and save in a different thread
+            Thread(Runnable(DatabaseTools(this)::saveValue))
+
+            Log.i("SERVICE", "Starting foreground service...")
 
             try
             {
@@ -35,15 +50,22 @@ class KeepAliveService : Service()
 
         thread!!.start()
         startForeground()
+    }
 
-        return super.onStartCommand(intent, flags, startId)
+    private fun stop()
+    {
+        // Stop the thread
+        interrupt()
+
+        // Stop the service and remove notification
+        stopForeground(true)
     }
 
     private fun startForeground()
     {
         OngoingNotificationManager.create(this)
 
-        val intent        = Intent(this, KeepAliveService::class.java)
+        val intent        = Intent()
         val pendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
 
         startForeground(OngoingNotificationManager.notificationId,
@@ -61,7 +83,10 @@ class KeepAliveService : Service()
     {
         private var thread: Thread? = null
 
-        fun stop()
+        const val ACTION_START_SERVICE = "ACTION_START_SERVICE"
+        const val ACTION_STOP_SERVICE  = "ACTION_STOP_SERVICE"
+
+        fun interrupt()
         {
             if (thread != null)
                 thread!!.interrupt()
