@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import java.util.Calendar
+import java.util.*
 
 @Dao
 interface SensorValueDao
@@ -13,7 +13,7 @@ interface SensorValueDao
     val values: List<SensorValue>
 
     @Query("SELECT * FROM sensorValue WHERE added=:date")
-    fun get(date: Calendar): List<SensorValue>
+    fun get(date: Date): List<SensorValue>
 
     @Insert
     fun insertAll(vararg values: SensorValue)
