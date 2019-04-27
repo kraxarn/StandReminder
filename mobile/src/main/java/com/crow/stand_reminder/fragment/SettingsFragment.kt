@@ -122,7 +122,7 @@ class SettingsFragment : PreferenceFragmentCompat()
 				val builder = StringBuilder()
 				for (value in values)
 				{
-					builder.append("${CalendarTools.format(value.added)}: ${value.value}\n")
+					builder.append("${CalendarTools.format(value.added, CalendarTools.Format.FULL)}: ${value.value}\n")
 				}
                 activity?.runOnUiThread {
                     AlertTools.showSimple(context!!, Date().toString(), builder.toString())
