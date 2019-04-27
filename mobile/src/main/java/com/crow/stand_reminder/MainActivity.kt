@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         settingsFragment = SettingsFragment()
 
         // Default shown fragment
-        NavigationTools.setFragment(supportFragmentManager, homeFragment)
+        NavigationTools.setFragment(supportFragmentManager, homeFragment!!)
 
         // Setup navigation listener
         findViewById<BottomNavigationView>(R.id.view_navigation).setOnNavigationItemSelectedListener(this)
