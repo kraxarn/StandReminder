@@ -5,20 +5,37 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-
+import android.util.Log
 import androidx.room.Room
-
-import com.crow.stand_reminder.data.Database
+import com.crow.stand_reminder.data.AppDatabase
 import com.crow.stand_reminder.data.SensorValue
 import java.io.Closeable
+import java.util.*
 
 class DatabaseTools(private val context: Context) : Closeable
 {
-    private val database: Database =
-            Room.databaseBuilder(context, Database::class.java, "storage.db").build()
+    private val database: AppDatabase =
+            Room.databaseBuilder(context, AppDatabase::class.java, "storage.db").build()
 
-    override fun close() =
-            database.close()
+    override fun close() {
+        database.close()
+    }
+
+    fun values() =
+            database.values()
+
+    fun getForDate(date: Calendar): List<SensorValue>
+    {
+        // I feel like there should be a better way to do this, but knowing Java, there probably isn't
+        val from = Calendar.getInstance().apply {
+            set(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DAY_OF_MONTH), 0,  0)
+        }
+        val to = Calendar.getInstance().apply {
+            set(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DAY_OF_MONTH), 23,  59)
+        }
+
+        return values().getBetween(from, to)
+    }
 
     fun drop() =
             database.clearAllTables()
