@@ -13,7 +13,10 @@ interface SensorValueDao
     val values: List<SensorValue>
 
     @Query("SELECT * FROM sensorValue WHERE added=:date")
-    fun get(date: Date): List<SensorValue>
+    fun get(date: Calendar): List<SensorValue>
+
+    @Query("SELECT * FROM sensorValue WHERE added BETWEEN :from AND :to")
+    fun getBetween(from: Calendar, to: Calendar): List<SensorValue>
 
     @Insert
     fun insertAll(vararg values: SensorValue)

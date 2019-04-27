@@ -8,5 +8,5 @@ import java.util.*
 data class SensorValue(val value: Float)
 {
     @PrimaryKey
-    var added: Date = Date()
+    var added: Calendar = Calendar.getInstance()
 }
