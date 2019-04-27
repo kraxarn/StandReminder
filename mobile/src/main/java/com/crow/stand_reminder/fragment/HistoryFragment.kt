@@ -55,17 +55,6 @@ class HistoryFragment : Fragment()
         return root
     }
 
-    private fun getRandomEmoticon(random: Random): Int
-    {
-        return when (random.nextInt(4))
-        {
-            0    -> R.drawable.ic_emoticon_angry
-            1    -> R.drawable.ic_emoticon_cool
-            2    -> R.drawable.ic_emoticon_happy
-            else -> R.drawable.ic_emoticon_sad
-        }
-    }
-
     private fun fillJournal()
     {
         val journal = root!!.findViewById<RecyclerView>(R.id.view_journal)
