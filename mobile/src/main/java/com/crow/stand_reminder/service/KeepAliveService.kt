@@ -29,22 +29,27 @@ class KeepAliveService : Service()
 
     private fun start()
     {
+        Log.i("SERVICE", "Starting foreground service...")
+
         thread = Thread {
-            // TODO: For testing only, just save a value every minute
-
-            // Get value and save in a different thread
-            DatabaseTools(this).saveValue()
-
-            Log.i("SERVICE", "Starting foreground service...")
-
-            try
+            while (true)
             {
-                Thread.sleep(60000)
-                OngoingNotificationManager.update(this, "Updated on ${Calendar.getInstance()}")
-            }
-            catch (e: InterruptedException)
-            {
-                e.printStackTrace()
+                // TODO: For testing only, just save a value every minute
+
+                // Get value and save in a different thread
+                DatabaseTools(this).saveValue()
+
+                Log.i("SERVICE", "Updating...")
+
+                try
+                {
+                    Thread.sleep(60000)
+                    OngoingNotificationManager.update(this, "Updated on ${Calendar.getInstance()}")
+                }
+                catch (e: InterruptedException)
+                {
+                    e.printStackTrace()
+                }
             }
         }
 
