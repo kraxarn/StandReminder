@@ -160,6 +160,13 @@
 			android:title="Delete values"
 			android:summary="Delete all values saved in the database"/>
 
+		<Preference
+			android:key="debug_show_today"
+			android:title="Show all values for today"
+			android:summary="Show all values that has been recorded for today"/>
+
+
+
 	</PreferenceCategory>
 
 </PreferenceScreen>

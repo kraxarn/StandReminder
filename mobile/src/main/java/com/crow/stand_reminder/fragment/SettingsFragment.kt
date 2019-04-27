@@ -10,8 +10,8 @@ import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceFragmentCompat
 import com.crow.stand_reminder.BuildConfig
 import com.crow.stand_reminder.R
-import com.crow.stand_reminder.tool.ServiceTools
-import com.crow.stand_reminder.tool.WearTools
+import com.crow.stand_reminder.tool.*
+import java.util.*
 
 class SettingsFragment : PreferenceFragmentCompat()
 {
@@ -94,5 +94,30 @@ class SettingsFragment : PreferenceFragmentCompat()
             true
         })
 
+        // Show today values
+        setOnPreferenceClickListener("debug_show_today", Preference.OnPreferenceClickListener {
+			Thread(Runnable {
+				val values = DatabaseTools(context!!).getForDate(Calendar.getInstance())
+                val total  = DatabaseTools(context!!).values().values.size
+
+				if (values.isEmpty())
+				{
+                    activity?.runOnUiThread {
+                        AlertTools.showSimple(context!!, "No values", "No values found for that day ($total total)")
+                    }
+                    return@Runnable
+				}
+
+				val builder = StringBuilder()
+				for (value in values)
+				{
+					builder.append("${CalendarTools.format(value.added)}: ${value.value}\n")
+				}
+                activity?.runOnUiThread {
+                    AlertTools.showSimple(context!!, Date().toString(), builder.toString())
+                }
+			}).start()
+            true
+        })
     }
 }
