@@ -8,6 +8,7 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 
 import com.crow.stand_reminder.R
+import com.crow.stand_reminder.tool.CalendarTools
 import com.crow.stand_reminder.tool.DatabaseTools
 
 import java.util.Calendar
@@ -41,7 +42,7 @@ class KeepAliveService : Service()
 
                 // Update notification
                 OngoingNotificationManager.update(this,
-                        "Updated on ${Calendar.getInstance()}")
+                        "Updated on ${CalendarTools.format(Calendar.getInstance(), CalendarTools.Format.FULL)}")
 
                 // Sleep for some time
                 try {
