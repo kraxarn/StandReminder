@@ -32,7 +32,7 @@ object OngoingNotificationManager
                     context,
                     notificationId,
                     channelId,
-                    R.drawable.ic_launcher_foreground,
+                    R.drawable.ic_human_greeting,
                     context.getString(R.string.app_name),
                     text,
                     NotificationCompat.PRIORITY_DEFAULT,
