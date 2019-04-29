@@ -76,7 +76,7 @@ class KeepAliveService : Service()
         startForeground(OngoingNotificationManager.notificationId,
                 NotificationCompat.Builder(this, OngoingNotificationManager.channelId)
                         .setOngoing(true)
-                        .setSmallIcon(R.drawable.ic_launcher_foreground)
+                        .setSmallIcon(R.drawable.ic_human_greeting)
                         .setContentTitle(getString(R.string.app_name))
                         .setContentTitle("Running in the background...")
                         .setContentIntent(pendingIntent)
