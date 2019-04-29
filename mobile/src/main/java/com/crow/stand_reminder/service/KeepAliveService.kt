@@ -39,15 +39,14 @@ class KeepAliveService : Service()
                 // Get value and save in a different thread
                 DatabaseTools(this).saveValue()
 
-                Log.i("SERVICE", "Updating...")
+                // Update notification
+                OngoingNotificationManager.update(this,
+                        "Updated on ${Calendar.getInstance()}")
 
-                try
-                {
-                    Thread.sleep(60000)
-                    OngoingNotificationManager.update(this, "Updated on ${Calendar.getInstance()}")
-                }
-                catch (e: InterruptedException)
-                {
+                // Sleep for some time
+                try {
+                    Thread.sleep(10000)
+                } catch (e: InterruptedException) {
                     e.printStackTrace()
                 }
             }
