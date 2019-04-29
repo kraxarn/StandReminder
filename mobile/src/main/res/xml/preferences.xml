@@ -154,7 +154,12 @@
 		<Preference
 			android:key="debug_stop_service"
 			android:title="Stop service"
-			android:summary="Stop foreground service, values will stop being recorded"/>
+			android:summary="Stop foreground service by sending a stop message, values will stop being recorded"/>
+
+		<Preference
+			android:key="debug_force_stop_service"
+			android:title="Force stop service"
+			android:summary="Stop foreground service with stopService, values will stop being recorded"/>
 
 		<Preference
 			android:key="debug_drop_database"

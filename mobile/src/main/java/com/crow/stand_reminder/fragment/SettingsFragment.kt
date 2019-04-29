@@ -95,6 +95,9 @@ class SettingsFragment : PreferenceFragmentCompat()
             ServiceTools.stop(context!!)
             true
         })
+        setOnPreferenceClickListener("debug_force_stop_service", Preference.OnPreferenceClickListener {
+            ServiceTools.forceStop(context!!)
+        })
 
         // Delete all values
         setOnPreferenceClickListener("debug_drop_database", Preference.OnPreferenceClickListener {
