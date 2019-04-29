@@ -9,7 +9,7 @@ object ServiceTools
 	private fun startIntent(context: Context, action: String) =
 			context.startService(Intent(context, KeepAliveService::class.java).apply {
 				this.action = action
-			})
+			}) != null
 
 	private fun stopIntent(context: Context) =
 			context.stopService(Intent(context, KeepAliveService::class.java))
