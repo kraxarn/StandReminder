@@ -14,56 +14,56 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener
 {
-    // Fragments for the different tabs
-    private var homeFragment:     HomeFragment?     = null
-    private var historyFragment:  HistoryFragment?  = null
-    private var settingsFragment: SettingsFragment? = null
+	// Fragments for the different tabs
+	private var homeFragment:     HomeFragment?     = null
+	private var historyFragment:  HistoryFragment?  = null
+	private var settingsFragment: SettingsFragment? = null
 
-    override fun onCreate(savedInstanceState: Bundle?)
-    {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+	override fun onCreate(savedInstanceState: Bundle?)
+	{
+		super.onCreate(savedInstanceState)
+		setContentView(R.layout.activity_main)
 
-        // Set navigation bar color
-        window.navigationBarColor = ResourcesCompat.getColor(resources, R.color.colorPrimary, null)
+		// Set navigation bar color
+		window.navigationBarColor = ResourcesCompat.getColor(resources, R.color.colorPrimary, null)
 
-        // Preload all fragments
-        homeFragment     = HomeFragment()
-        historyFragment  = HistoryFragment()
-        settingsFragment = SettingsFragment()
+		// Preload all fragments
+		homeFragment     = HomeFragment()
+		historyFragment  = HistoryFragment()
+		settingsFragment = SettingsFragment()
 
-        // Default shown fragment
-        NavigationTools.setFragment(supportFragmentManager, homeFragment!!)
+		// Default shown fragment
+		NavigationTools.setFragment(supportFragmentManager, homeFragment!!)
 
-        // Setup navigation listener
-        findViewById<BottomNavigationView>(R.id.view_navigation).setOnNavigationItemSelectedListener(this)
+		// Setup navigation listener
+		findViewById<BottomNavigationView>(R.id.view_navigation).setOnNavigationItemSelectedListener(this)
 
-        // Set density for hour entries
-        HourEntryAdapter.densityDpi = resources.displayMetrics.density
-    }
+		// Set density for hour entries
+		HourEntryAdapter.densityDpi = resources.displayMetrics.density
+	}
 
-    private fun getFragmentFromId(id: Int): Fragment? =
-            when (id)
-            {
-                R.id.navigation_home     -> homeFragment
-                R.id.navigation_history  -> historyFragment
-                R.id.navigation_settings -> settingsFragment
-                else                     -> null
-            }
+	private fun getFragmentFromId(id: Int): Fragment? =
+		when (id)
+		{
+			R.id.navigation_home     -> homeFragment
+			R.id.navigation_history  -> historyFragment
+			R.id.navigation_settings -> settingsFragment
+			else                     -> null
+		}
 
-    override fun onNavigationItemSelected(menuItem: MenuItem): Boolean
-    {
-        val fragment = getFragmentFromId(menuItem.itemId)
+	override fun onNavigationItemSelected(menuItem: MenuItem): Boolean
+	{
+		val fragment = getFragmentFromId(menuItem.itemId)
 
-        if (fragment != null)
-        {
-            // Set new selected item
-            NavigationTools.setFragment(supportFragmentManager, fragment)
+		if (fragment != null)
+		{
+			// Set new selected item
+			NavigationTools.setFragment(supportFragmentManager, fragment)
 
-            // Display item as selected item
-            return true
-        }
+			// Display item as selected item
+			return true
+		}
 
-        return false
-    }
+		return false
+	}
 }

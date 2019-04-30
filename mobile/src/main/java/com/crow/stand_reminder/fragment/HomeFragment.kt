@@ -26,65 +26,65 @@ import java.util.Random
 
 class HomeFragment : Fragment()
 {
-    private var root: View? = null
+	private var root: View? = null
 
-    private var progressBarCircular: ProgressBar? = null
+	private var progressBarCircular: ProgressBar? = null
 
-    private val randomHourChips: ArrayList<HourChip>
-        get()
-        {
-            val chips  = arrayListOf<HourChip>()
-            val random = Random()
+	private val randomHourChips: ArrayList<HourChip>
+		get()
+		{
+			val chips  = arrayListOf<HourChip>()
+			val random = Random()
 
-            for (i in 0..23)
-                if (random.nextInt(2) == 0)
+			for (i in 0..23)
+				if (random.nextInt(2) == 0)
 					chips += HourChip("${DecimalFormat("00").format(i)}:00")
 
-            return chips
-        }
+			return chips
+		}
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
-    {
-        root = inflater.inflate(R.layout.fragment_home, container, false)
+	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
+	{
+		root = inflater.inflate(R.layout.fragment_home, container, false)
 
-        progressBarCircular = root!!.findViewById(R.id.progress_circular)
+		progressBarCircular = root!!.findViewById(R.id.progress_circular)
 
-        // Testing
-        setProgress(40)
-        fillHourChipsAsGridView()
+		// Testing
+		setProgress(40)
+		fillHourChipsAsGridView()
 
-        return root
-    }
+		return root
+	}
 
-    private fun fillHourChips()
-    {
-        val hourChips       = root!!.findViewById<RecyclerView>(R.id.list_hour_chips)
-        val hourChipAdapter = HourChipAdapter(randomHourChips)
+	private fun fillHourChips()
+	{
+		val hourChips       = root!!.findViewById<RecyclerView>(R.id.list_hour_chips)
+		val hourChipAdapter = HourChipAdapter(randomHourChips)
 
-        // For spacing
-        // TODO: Auto set span count
-        val layoutManager  = GridLayoutManager(context, 5)
-        val itemDecoration = VerticalItemSpacing((8 * HourEntryAdapter.densityDpi).toInt())
+		// For spacing
+		// TODO: Auto set span count
+		val layoutManager  = GridLayoutManager(context, 5)
+		val itemDecoration = VerticalItemSpacing((8 * HourEntryAdapter.densityDpi).toInt())
 
-        hourChips.addItemDecoration(itemDecoration)
-        hourChips.adapter       = hourChipAdapter
-        hourChips.layoutManager = layoutManager
-    }
+		hourChips.addItemDecoration(itemDecoration)
+		hourChips.adapter       = hourChipAdapter
+		hourChips.layoutManager = layoutManager
+	}
 
-    private fun fillHourChipsAsGridView()
-    {
-        val hourChips = root!!.findViewById<GridView>(R.id.list_hour_chips_grid)
-        val adapter   = HourChipListAdapter(randomHourChips)
+	private fun fillHourChipsAsGridView()
+	{
+		val hourChips = root!!.findViewById<GridView>(R.id.list_hour_chips_grid)
+		val adapter   = HourChipListAdapter(randomHourChips)
 
-        hourChips.adapter = adapter
-    }
+		hourChips.adapter = adapter
+	}
 
-    private fun setProgress(progress: Int)
-    {
-        ObjectAnimator.ofInt(progressBarCircular!!, "progress", progressBarCircular!!.progress, progress).apply {
-            duration = 2000
-            interpolator = AccelerateDecelerateInterpolator()
-            start()
-        }
-    }
+	private fun setProgress(progress: Int)
+	{
+		ObjectAnimator.ofInt(progressBarCircular!!, "progress", progressBarCircular!!.progress, progress).apply {
+			duration = 2000
+			interpolator = AccelerateDecelerateInterpolator()
+			start()
+		}
+	}
 }

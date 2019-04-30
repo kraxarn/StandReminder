@@ -17,110 +17,110 @@ import java.util.*
 
 class SettingsFragment : PreferenceFragmentCompat()
 {
-    private fun setOnPreferenceClickListener(key: String, listener: Preference.OnPreferenceClickListener)
-    {
-        val preference = findPreference<Preference>(key)
+	private fun setOnPreferenceClickListener(key: String, listener: Preference.OnPreferenceClickListener)
+	{
+		val preference = findPreference<Preference>(key)
 
-        if (preference != null)
-            preference.onPreferenceClickListener = listener
-    }
+		if (preference != null)
+			preference.onPreferenceClickListener = listener
+	}
 
-    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?)
-    {
-        addPreferencesFromResource(R.xml.preferences)
+	override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?)
+	{
+		addPreferencesFromResource(R.xml.preferences)
 
-        // Set click event for notification settings
-        setOnPreferenceClickListener("notification_settings", Preference.OnPreferenceClickListener
-        {
-            startActivity(if (Build.VERSION.SDK_INT >= 26)
-            {
-                // Open notification channels on 8.0
-                Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS)
-                        .putExtra(Settings.EXTRA_APP_PACKAGE, context!!.packageName)
-                        .putExtra(Settings.EXTRA_CHANNEL_ID, "reminders")
-            }
-            else
-            {
-                // Open generic notification settings on older
-                Intent().setAction("android.settings.APP_NOTIFICATION_SETTINGS")
-            })
+		// Set click event for notification settings
+		setOnPreferenceClickListener("notification_settings", Preference.OnPreferenceClickListener
+		{
+			startActivity(if (Build.VERSION.SDK_INT >= 26)
+			{
+				// Open notification channels on 8.0
+				Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS)
+						.putExtra(Settings.EXTRA_APP_PACKAGE, context!!.packageName)
+						.putExtra(Settings.EXTRA_CHANNEL_ID, "reminders")
+			}
+			else
+			{
+				// Open generic notification settings on older
+				Intent().setAction("android.settings.APP_NOTIFICATION_SETTINGS")
+			})
 
-            true
-        })
+			true
+		})
 
-        // Fill list with wear devices
-        val wearDevice = findPreference<ListPreference>("wear_device")
-        if (wearDevice != null && context != null)
-            Thread(Runnable
-            {
-                val nodes = WearTools.getNodes(context!!)
-                if (nodes == null || nodes.isEmpty())
-                {
-                    val wearCategory = findPreference<PreferenceCategory>("category_wear")
-                    if (activity != null && wearCategory != null)
-                        activity!!.runOnUiThread { wearCategory.isEnabled = false }
-                    return@Runnable
-                }
+		// Fill list with wear devices
+		val wearDevice = findPreference<ListPreference>("wear_device")
+		if (wearDevice != null && context != null)
+			Thread(Runnable
+			{
+				val nodes = WearTools.getNodes(context!!)
+				if (nodes == null || nodes.isEmpty())
+				{
+					val wearCategory = findPreference<PreferenceCategory>("category_wear")
+					if (activity != null && wearCategory != null)
+						activity!!.runOnUiThread { wearCategory.isEnabled = false }
+					return@Runnable
+				}
 
-                // Node entries with strings to show in dialog
-                val entries = arrayOf<String>()
-                // Node IDs to save to preferences
-                val values  = arrayOf<String>()
+				// Node entries with strings to show in dialog
+				val entries = arrayOf<String>()
+				// Node IDs to save to preferences
+				val values  = arrayOf<String>()
 
-                for ((i, node) in nodes.withIndex())
-                {
-                    entries[i] = node.displayName
-                    values[i]  = node.id
-                }
+				for ((i, node) in nodes.withIndex())
+				{
+					entries[i] = node.displayName
+					values[i]  = node.id
+				}
 
-                wearDevice.entries     = entries
-                wearDevice.entryValues = values
-            }).start()
+				wearDevice.entries     = entries
+				wearDevice.entryValues = values
+			}).start()
 
-        // Set correct version info
-        val version = findPreference<Preference>("about_version")
-        if (version != null)
-        {
-            version.title = BuildConfig.VERSION_NAME
-            if (BuildConfig.BUILD_TYPE == "debug")
-                version.summary = "Debug build"
-        }
+		// Set correct version info
+		val version = findPreference<Preference>("about_version")
+		if (version != null)
+		{
+			version.title = BuildConfig.VERSION_NAME
+			if (BuildConfig.BUILD_TYPE == "debug")
+				version.summary = "Debug build"
+		}
 
-        // Start and stop service
-        setOnPreferenceClickListener("debug_start_service", Preference.OnPreferenceClickListener {
-            ServiceTools.start(context!!)
-            true
-        })
-        setOnPreferenceClickListener("debug_stop_service", Preference.OnPreferenceClickListener {
-            ServiceTools.stop(context!!)
-            true
-        })
-        setOnPreferenceClickListener("debug_force_stop_service", Preference.OnPreferenceClickListener {
-            ServiceTools.forceStop(context!!)
-        })
+		// Start and stop service
+		setOnPreferenceClickListener("debug_start_service", Preference.OnPreferenceClickListener {
+			ServiceTools.start(context!!)
+			true
+		})
+		setOnPreferenceClickListener("debug_stop_service", Preference.OnPreferenceClickListener {
+			ServiceTools.stop(context!!)
+			true
+		})
+		setOnPreferenceClickListener("debug_force_stop_service", Preference.OnPreferenceClickListener {
+			ServiceTools.forceStop(context!!)
+		})
 
-        // Delete all values
-        setOnPreferenceClickListener("debug_drop_database", Preference.OnPreferenceClickListener {
-            val toast = Toast.makeText(context!!, "Database dropped", Toast.LENGTH_SHORT)
-            Thread(Runnable {
-                DatabaseTools(context!!).drop()
-                toast.show()
-            }).start()
-            true
-        })
+		// Delete all values
+		setOnPreferenceClickListener("debug_drop_database", Preference.OnPreferenceClickListener {
+			val toast = Toast.makeText(context!!, "Database dropped", Toast.LENGTH_SHORT)
+			Thread(Runnable {
+				DatabaseTools(context!!).drop()
+				toast.show()
+			}).start()
+			true
+		})
 
-        // Show today values
-        setOnPreferenceClickListener("debug_show_today", Preference.OnPreferenceClickListener {
+		// Show today values
+		setOnPreferenceClickListener("debug_show_today", Preference.OnPreferenceClickListener {
 			Thread(Runnable {
 				val values = DatabaseTools(context!!).getForDate(Calendar.getInstance())
-                val total  = DatabaseTools(context!!).values().values.size
+				val total  = DatabaseTools(context!!).values().values.size
 
 				if (values.isEmpty())
 				{
-                    activity?.runOnUiThread {
-                        AlertTools.showSimple(context!!, "No values", "No values found for that day ($total total)")
-                    }
-                    return@Runnable
+					activity?.runOnUiThread {
+						AlertTools.showSimple(context!!, "No values", "No values found for that day ($total total)")
+					}
+					return@Runnable
 				}
 
 				val builder = StringBuilder()
@@ -128,29 +128,29 @@ class SettingsFragment : PreferenceFragmentCompat()
 				{
 					builder.append("${CalendarTools.format(value.added, CalendarTools.Format.FULL)}: ${value.value}\n")
 				}
-                activity?.runOnUiThread {
-                    AlertTools.showSimple(context!!, Date().toString(), builder.toString())
-                }
+				activity?.runOnUiThread {
+					AlertTools.showSimple(context!!, Date().toString(), builder.toString())
+				}
 			}).start()
-            true
-        })
+			true
+		})
 
-        // Debug info
-        setOnPreferenceClickListener("debug_info", Preference.OnPreferenceClickListener {
-            Thread(Runnable {
-                // Get database to show stuffs later
-                val db = DatabaseTools(context!!)
-                // Prepare message
-                val message = "ServiceRunning=${KeepAliveService.isRunning()}\n" +
-                        "FirstDate=${if (db.values().values.isEmpty()) { "Empty" } else { CalendarTools.format(db.values().valuesAddedAsc[0].added, CalendarTools.Format.DATE) }}\n" +
-                        "InstanceDate=${CalendarTools.format(Calendar.getInstance(), CalendarTools.Format.DATE)}"
-                // Show alert
-                activity?.runOnUiThread {
-                    AlertTools.showSimple(context!!, "Debug Info", message)
-                }
-            }).start()
+		// Debug info
+		setOnPreferenceClickListener("debug_info", Preference.OnPreferenceClickListener {
+			Thread(Runnable {
+				// Get database to show stuffs later
+				val db = DatabaseTools(context!!)
+				// Prepare message
+				val message = "ServiceRunning=${KeepAliveService.isRunning()}\n" +
+						"FirstDate=${if (db.values().values.isEmpty()) { "Empty" } else { CalendarTools.format(db.values().valuesAddedAsc[0].added, CalendarTools.Format.DATE) }}\n" +
+						"InstanceDate=${CalendarTools.format(Calendar.getInstance(), CalendarTools.Format.DATE)}"
+				// Show alert
+				activity?.runOnUiThread {
+					AlertTools.showSimple(context!!, "Debug Info", message)
+				}
+			}).start()
 
-            true
-        })
-    }
+			true
+		})
+	}
 }

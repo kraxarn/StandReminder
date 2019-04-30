@@ -20,47 +20,47 @@ import java.util.Random
 
 class HistoryFragment : Fragment()
 {
-    private var root: View? = null
+	private var root: View? = null
 
-    private val randomJournalItems: ArrayList<JournalEntry>?
-        get()
-        {
-            if (context == null)
-                return null
+	private val randomJournalItems: ArrayList<JournalEntry>?
+		get()
+		{
+			if (context == null)
+				return null
 
-            val entries = arrayListOf<JournalEntry>()
-            val random  = Random()
+			val entries = arrayListOf<JournalEntry>()
+			val random  = Random()
 
-            val df4 = DecimalFormat("0000")
-            val df2 = DecimalFormat("00")
+			val df4 = DecimalFormat("0000")
+			val df2 = DecimalFormat("00")
 
-            for (i in 0..2000)
-                entries += JournalEntry(context,
-                        "${df4.format(random.nextInt(100) + 2000)}-${df2.format(random.nextInt(12))}-${df2.format(random.nextInt(31))}",
-                        random.nextInt(24),
-                        "${df2.format(random.nextInt(12))}:00-${df2.format(random.nextInt(12))}:00")
+			for (i in 0..2000)
+				entries += JournalEntry(context,
+					"${df4.format(random.nextInt(100) + 2000)}-${df2.format(random.nextInt(12))}-${df2.format(random.nextInt(31))}",
+					random.nextInt(24),
+					"${df2.format(random.nextInt(12))}:00-${df2.format(random.nextInt(12))}:00")
 
-            return entries
-        }
+			return entries
+		}
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
-    {
-        root = inflater.inflate(R.layout.fragment_history, container, false)
-        Thread(Runnable { this.fillJournal() }).start()
-        return root
-    }
+	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
+	{
+		root = inflater.inflate(R.layout.fragment_history, container, false)
+		Thread(Runnable { this.fillJournal() }).start()
+		return root
+	}
 
-    private fun fillJournal()
-    {
-        val journal = root!!.findViewById<RecyclerView>(R.id.view_journal)
-        val adapter = JournalAdapter(randomJournalItems)
+	private fun fillJournal()
+	{
+		val journal = root!!.findViewById<RecyclerView>(R.id.view_journal)
+		val adapter = JournalAdapter(randomJournalItems)
 
-        journal.post {
-            // Set adapter and layout
-            journal.adapter       = adapter
-            journal.layoutManager = LinearLayoutManager(context)
-            // Hide loading
-            root!!.findViewById<ProgressBar>(R.id.progress_loading_journal).visibility = View.GONE
-        }
-    }
+		journal.post {
+			// Set adapter and layout
+			journal.adapter       = adapter
+			journal.layoutManager = LinearLayoutManager(context)
+			// Hide loading
+			root!!.findViewById<ProgressBar>(R.id.progress_loading_journal).visibility = View.GONE
+		}
+	}
 }

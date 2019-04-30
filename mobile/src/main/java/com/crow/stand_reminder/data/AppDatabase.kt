@@ -8,5 +8,5 @@ import androidx.room.TypeConverters
 @TypeConverters(DataConverter::class)
 abstract class AppDatabase : RoomDatabase()
 {
-    abstract fun values(): SensorValueDao
+	abstract fun values(): SensorValueDao
 }

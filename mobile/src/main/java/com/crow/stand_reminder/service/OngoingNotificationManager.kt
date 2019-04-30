@@ -8,45 +8,45 @@ import com.crow.stand_reminder.tool.NotificationTools
 
 object OngoingNotificationManager
 {
-    private var enabled = false
+	private var enabled = false
 
-    const val notificationId = 1010
+	const val notificationId = 1010
 
-    const val channelId = "persistent"
+	const val channelId = "persistent"
 
-    private const val name = "Persistent"
+	private const val name = "Persistent"
 
-    fun create(context: Context)
-    {
-        // Just create a notification channel, don't show anything yet
-        // TODO: NO
-        NotificationTools.createNotificationChannel(context, channelId, name, NotificationCompat.PRIORITY_DEFAULT)
-        // Enabled
-        enabled = true
-    }
+	fun create(context: Context)
+	{
+		// Just create a notification channel, don't show anything yet
+		// TODO: NO
+		NotificationTools.createNotificationChannel(context, channelId, name, NotificationCompat.PRIORITY_DEFAULT)
+		// Enabled
+		enabled = true
+	}
 
-    fun update(context: Context, text: String)
-    {
-        if (enabled)
-            NotificationTools.show(
-                    context,
-                    notificationId,
-                    channelId,
-                    R.drawable.ic_human_greeting,
-                    context.getString(R.string.app_name),
-                    text,
-                    NotificationCompat.PRIORITY_DEFAULT,
-                    true)
-    }
+	fun update(context: Context, text: String)
+	{
+		if (enabled)
+			NotificationTools.show(
+				context,
+				notificationId,
+				channelId,
+				R.drawable.ic_human_greeting,
+				context.getString(R.string.app_name),
+				text,
+				NotificationCompat.PRIORITY_DEFAULT,
+				true)
+	}
 
-    fun resume()
-    {
-        enabled = true
-    }
+	fun resume()
+	{
+		enabled = true
+	}
 
-    fun pause(context: Context)
-    {
-        NotificationManagerCompat.from(context).cancel(notificationId)
-        enabled = false
-    }
+	fun pause(context: Context)
+	{
+		NotificationManagerCompat.from(context).cancel(notificationId)
+		enabled = false
+	}
 }

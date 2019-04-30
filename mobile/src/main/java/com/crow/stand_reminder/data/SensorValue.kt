@@ -7,6 +7,6 @@ import java.util.*
 @Entity
 data class SensorValue(val value: Float)
 {
-    @PrimaryKey
-    var added: Calendar = Calendar.getInstance()
+	@PrimaryKey
+	var added: Calendar = Calendar.getInstance()
 }
