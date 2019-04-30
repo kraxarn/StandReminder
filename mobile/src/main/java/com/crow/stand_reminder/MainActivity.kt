@@ -68,7 +68,13 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
 	companion object
 	{
+		private var density = 0f
+
 		// Density for use in other things
-		var densityDpi = 0f
+		var densityDpi: Float
+			get() = this.density
+			private set(value) {
+				this.density = value
+			}
 	}
 }
