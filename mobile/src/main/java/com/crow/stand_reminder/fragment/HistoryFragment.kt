@@ -53,7 +53,7 @@ class HistoryFragment : Fragment()
 	private fun fillJournal()
 	{
 		val journal = root!!.findViewById<RecyclerView>(R.id.view_journal)
-		val adapter = JournalAdapter(randomJournalItems)
+		val adapter = JournalAdapter(randomJournalItems ?: arrayListOf())
 
 		journal.post {
 			// Set adapter and layout
