@@ -11,18 +11,14 @@ import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-
+import com.crow.stand_reminder.MainActivity
 import com.crow.stand_reminder.R
 import com.crow.stand_reminder.list.VerticalItemSpacing
 import com.crow.stand_reminder.list.hourChip.HourChip
 import com.crow.stand_reminder.list.hourChip.HourChipAdapter
 import com.crow.stand_reminder.list.hourChip.HourChipListAdapter
-import com.crow.stand_reminder.list.hourEntry.HourEntryAdapter
-
 import java.text.DecimalFormat
-import java.util.ArrayList
-import java.util.Locale
-import java.util.Random
+import java.util.*
 
 class HomeFragment : Fragment()
 {
@@ -64,7 +60,7 @@ class HomeFragment : Fragment()
 		// For spacing
 		// TODO: Auto set span count
 		val layoutManager  = GridLayoutManager(context, 5)
-		val itemDecoration = VerticalItemSpacing((8 * HourEntryAdapter.densityDpi).toInt())
+		val itemDecoration = VerticalItemSpacing((8 * MainActivity.densityDpi).toInt())
 
 		hourChips.addItemDecoration(itemDecoration)
 		hourChips.adapter       = hourChipAdapter

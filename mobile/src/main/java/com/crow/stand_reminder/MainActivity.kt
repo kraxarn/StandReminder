@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import com.crow.stand_reminder.fragment.HistoryFragment
 import com.crow.stand_reminder.fragment.HomeFragment
 import com.crow.stand_reminder.fragment.SettingsFragment
-import com.crow.stand_reminder.list.hourEntry.HourEntryAdapter
 import com.crow.stand_reminder.tool.NavigationTools
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -38,8 +37,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 		// Setup navigation listener
 		findViewById<BottomNavigationView>(R.id.view_navigation).setOnNavigationItemSelectedListener(this)
 
-		// Set density for hour entries
-		HourEntryAdapter.densityDpi = resources.displayMetrics.density
+		// Set density for hour chips
+		densityDpi = resources.displayMetrics.density
 	}
 
 	private fun getFragmentFromId(id: Int): Fragment? =
@@ -65,5 +64,11 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 		}
 
 		return false
+	}
+
+	companion object
+	{
+		// Density for use in other things
+		var densityDpi = 0f
 	}
 }
