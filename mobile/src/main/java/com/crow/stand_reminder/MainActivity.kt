@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 		findViewById<BottomNavigationView>(R.id.view_navigation).setOnNavigationItemSelectedListener(this)
 
 		// Set density for hour chips
-		densityDpi = resources.displayMetrics.density
+		density = resources.displayMetrics.density
 	}
 
 	private fun getFragmentFromId(id: Int): Fragment? =
@@ -71,10 +71,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 		private var density = 0f
 
 		// Density for use in other things
-		var densityDpi: Float
+		val densityDpi: Float
 			get() = this.density
-			private set(value) {
-				this.density = value
-			}
 	}
 }
