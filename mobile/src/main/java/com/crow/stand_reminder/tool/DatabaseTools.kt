@@ -6,6 +6,7 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import androidx.room.Room
+import com.crow.stand_reminder.AppPreferences
 import com.crow.stand_reminder.StateManager
 import com.crow.stand_reminder.data.AppDatabase
 import com.crow.stand_reminder.data.SensorValue
@@ -81,7 +82,7 @@ class DatabaseTools(private val context: Context) : Closeable
 				continue
 
 			// If it doesn't count as standing up, ignore
-			if (!StateManager.isStanding(context, value))
+			if (!StateManager.isStanding(value.value, AppPreferences(context).sensorSensitivity))
 				continue
 
 			// We found one that counts as standing up, add to total
