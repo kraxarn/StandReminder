@@ -35,7 +35,7 @@ class HistoryFragment : Fragment()
 			val df2 = DecimalFormat("00")
 
 			for (i in 0..2000)
-				entries += JournalEntry(context,
+				entries += JournalEntry(context!!,
 					"${df4.format(random.nextInt(100) + 2000)}-${df2.format(random.nextInt(12))}-${df2.format(random.nextInt(31))}",
 					random.nextInt(24),
 					"${df2.format(random.nextInt(12))}:00-${df2.format(random.nextInt(12))}:00")
