@@ -47,7 +47,7 @@ class HistoryFragment : Fragment()
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
 	{
 		root = inflater.inflate(R.layout.fragment_history, container, false)
-		thread { this.fillJournal() }.start()
+		thread(true) { this.fillJournal() }
 		return root
 	}
 

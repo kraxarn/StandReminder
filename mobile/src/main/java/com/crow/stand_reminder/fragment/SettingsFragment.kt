@@ -52,7 +52,7 @@ class SettingsFragment : PreferenceFragmentCompat()
 		// Fill list with wear devices
 		val wearDevice = findPreference<ListPreference>("wear_device")
 		if (wearDevice != null && context != null)
-			thread {
+			thread(true) {
 				val nodes = WearTools.getNodes(context!!)
 				if (nodes == null || nodes.isEmpty())
 				{
@@ -75,7 +75,7 @@ class SettingsFragment : PreferenceFragmentCompat()
 
 				wearDevice.entries     = entries
 				wearDevice.entryValues = values
-			}.start()
+			}
 
 		// Set correct version info
 		val version = findPreference<Preference>("about_version")
@@ -102,10 +102,10 @@ class SettingsFragment : PreferenceFragmentCompat()
 		// Delete all values
 		setOnPreferenceClickListener("debug_drop_database", Preference.OnPreferenceClickListener {
 			val toast = Toast.makeText(context!!, "Database dropped", Toast.LENGTH_SHORT)
-			thread {
+			thread(true) {
 				DatabaseTools(context!!).drop()
 				toast.show()
-			}.start()
+			}
 			true
 		})
 
