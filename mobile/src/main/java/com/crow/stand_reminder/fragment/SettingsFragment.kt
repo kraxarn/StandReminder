@@ -14,6 +14,7 @@ import com.crow.stand_reminder.R
 import com.crow.stand_reminder.service.KeepAliveService
 import com.crow.stand_reminder.tool.*
 import java.util.*
+import kotlin.concurrent.thread
 
 class SettingsFragment : PreferenceFragmentCompat()
 {
@@ -51,15 +52,14 @@ class SettingsFragment : PreferenceFragmentCompat()
 		// Fill list with wear devices
 		val wearDevice = findPreference<ListPreference>("wear_device")
 		if (wearDevice != null && context != null)
-			Thread(Runnable
-			{
+			thread {
 				val nodes = WearTools.getNodes(context!!)
 				if (nodes == null || nodes.isEmpty())
 				{
 					val wearCategory = findPreference<PreferenceCategory>("category_wear")
 					if (activity != null && wearCategory != null)
 						activity!!.runOnUiThread { wearCategory.isEnabled = false }
-					return@Runnable
+					return@thread
 				}
 
 				// Node entries with strings to show in dialog
@@ -75,7 +75,7 @@ class SettingsFragment : PreferenceFragmentCompat()
 
 				wearDevice.entries     = entries
 				wearDevice.entryValues = values
-			}).start()
+			}.start()
 
 		// Set correct version info
 		val version = findPreference<Preference>("about_version")
@@ -102,16 +102,16 @@ class SettingsFragment : PreferenceFragmentCompat()
 		// Delete all values
 		setOnPreferenceClickListener("debug_drop_database", Preference.OnPreferenceClickListener {
 			val toast = Toast.makeText(context!!, "Database dropped", Toast.LENGTH_SHORT)
-			Thread(Runnable {
+			thread {
 				DatabaseTools(context!!).drop()
 				toast.show()
-			}).start()
+			}.start()
 			true
 		})
 
 		// Show today values
 		setOnPreferenceClickListener("debug_show_today", Preference.OnPreferenceClickListener {
-			Thread(Runnable {
+			thread {
 				val values = DatabaseTools(context!!).getForDate(Calendar.getInstance())
 				val total  = DatabaseTools(context!!).values().values.size
 
@@ -120,7 +120,7 @@ class SettingsFragment : PreferenceFragmentCompat()
 					activity?.runOnUiThread {
 						AlertTools.showSimple(context!!, "No values", "No values found for that day ($total total)")
 					}
-					return@Runnable
+					return@thread
 				}
 
 				val builder = StringBuilder()
@@ -131,13 +131,13 @@ class SettingsFragment : PreferenceFragmentCompat()
 				activity?.runOnUiThread {
 					AlertTools.showSimple(context!!, Date().toString(), builder.toString())
 				}
-			}).start()
+			}.start()
 			true
 		})
 
 		// Debug info
 		setOnPreferenceClickListener("debug_info", Preference.OnPreferenceClickListener {
-			Thread(Runnable {
+			thread {
 				// Get database to show stuffs later
 				val db = DatabaseTools(context!!)
 				// Prepare message
@@ -148,7 +148,7 @@ class SettingsFragment : PreferenceFragmentCompat()
 				activity?.runOnUiThread {
 					AlertTools.showSimple(context!!, "Debug Info", message)
 				}
-			}).start()
+			}.start()
 
 			true
 		})

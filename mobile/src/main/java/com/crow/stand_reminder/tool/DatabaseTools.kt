@@ -12,6 +12,7 @@ import com.crow.stand_reminder.data.AppDatabase
 import com.crow.stand_reminder.data.SensorValue
 import java.io.Closeable
 import java.util.*
+import kotlin.concurrent.thread
 
 class DatabaseTools(private val context: Context) : Closeable
 {
@@ -110,7 +111,9 @@ class DatabaseTools(private val context: Context) : Closeable
 				sensorTools.sensorManager.unregisterListener(this)
 				// It's 1 on mobile, 0 on watch
 				// (it needs to be saved on another thread)
-				Thread(Runnable { saveValue(event.values[1]) }).start()
+				thread {
+					saveValue(event.values[1])
+				}.start()
 			}
 
 			override fun onAccuracyChanged(sensor: Sensor, accuracy: Int)

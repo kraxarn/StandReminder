@@ -17,6 +17,7 @@ import java.text.DecimalFormat
 import java.util.ArrayList
 import java.util.Locale
 import java.util.Random
+import kotlin.concurrent.thread
 
 class HistoryFragment : Fragment()
 {
@@ -46,7 +47,7 @@ class HistoryFragment : Fragment()
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
 	{
 		root = inflater.inflate(R.layout.fragment_history, container, false)
-		Thread(Runnable { this.fillJournal() }).start()
+		thread { this.fillJournal() }.start()
 		return root
 	}
 
