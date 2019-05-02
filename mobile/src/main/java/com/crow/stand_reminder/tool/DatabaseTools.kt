@@ -10,6 +10,9 @@ import com.crow.stand_reminder.AppPreferences
 import com.crow.stand_reminder.StateManager
 import com.crow.stand_reminder.data.AppDatabase
 import com.crow.stand_reminder.data.SensorValue
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.io.Closeable
 import java.util.*
 import kotlin.concurrent.thread
@@ -98,6 +101,33 @@ class DatabaseTools(private val context: Context) : Closeable
 
 	fun saveValue(value: Float) =
 		database.values().insertAll(SensorValue(value))
+
+	fun getSensorValue(): Float
+	{
+		val sensorTools = SensorTools(context)
+
+		var value: Float? = null
+
+		val t = thread(true) {
+			sensorTools.sensorManager.registerListener(object : SensorEventListener
+			{
+				override fun onSensorChanged(event: SensorEvent)
+				{
+					// We only want one value
+					sensorTools.sensorManager.unregisterListener(this)
+					// Set value to the value we got
+					value = event.values[1]
+				}
+
+				override fun onAccuracyChanged(sensor: Sensor, accuracy: Int)
+				{
+				}
+			}, sensorTools.sensor, SensorManager.SENSOR_DELAY_NORMAL)
+		}
+		t.join()
+
+		return value!!
+	}
 
 	fun saveValue()
 	{
