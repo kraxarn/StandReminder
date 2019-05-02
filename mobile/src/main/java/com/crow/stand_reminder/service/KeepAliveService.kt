@@ -2,6 +2,7 @@ package com.crow.stand_reminder.service
 
 import android.app.PendingIntent
 import android.app.Service
+import android.content.Context
 import android.content.Intent
 import android.os.IBinder
 import android.util.Log
@@ -10,8 +11,41 @@ import androidx.core.app.NotificationCompat
 import com.crow.stand_reminder.R
 import com.crow.stand_reminder.tool.CalendarTools
 import com.crow.stand_reminder.tool.DatabaseTools
+import java.util.*
+import kotlin.concurrent.thread
+import kotlin.concurrent.timerTask
 
-import java.util.Calendar
+private class ServiceTask(val context: Context) : TimerTask()
+{
+	override fun run()
+	{
+		Log.d("SERVICE_TASK", "Running...")
+
+		// TODO: For testing only, just save a value every minute
+
+		// Get value and save in a different thread
+		DatabaseTools(context).saveValue()
+
+		// Update notification
+		OngoingNotificationManager.update(context,
+			"Updated on ${CalendarTools.format(Calendar.getInstance(), CalendarTools.Format.FULL)}")
+
+		// Schedule next check
+		// TODO: Set next time depending on what we did
+		schedule(context, 1000)
+	}
+
+	companion object
+	{
+		private var timer = Timer()
+
+		fun schedule(context: Context, delay: Long) =
+			timer.schedule(ServiceTask(context), delay)
+
+		fun getMinutesToNextHour(): Int =
+			60 - Calendar.getInstance().get(Calendar.MINUTE)
+	}
+}
 
 class KeepAliveService : Service()
 {
@@ -31,29 +65,8 @@ class KeepAliveService : Service()
 	private fun start()
 	{
 		Log.i("SERVICE", "Starting foreground service...")
+		ServiceTask.schedule(this, 1000)
 
-		thread = Thread {
-			while (true)
-			{
-				// TODO: For testing only, just save a value every minute
-
-				// Get value and save in a different thread
-				DatabaseTools(this).saveValue()
-
-				// Update notification
-				OngoingNotificationManager.update(this,
-					"Updated on ${CalendarTools.format(Calendar.getInstance(), CalendarTools.Format.FULL)}")
-
-				// Sleep for some time
-				try {
-					Thread.sleep(10000)
-				} catch (e: InterruptedException) {
-					e.printStackTrace()
-				}
-			}
-		}
-
-		thread!!.start()
 		startForeground()
 	}
 
