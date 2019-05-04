@@ -56,6 +56,9 @@ class DatabaseTools(private val context: Context) : Closeable
 	fun getAllCurrentHour(): List<SensorValue> =
 		getAllForHour(Calendar.getInstance())
 
+	fun getAllCurrentDay(): List<SensorValue> =
+		getForDate(Calendar.getInstance())
+
 	fun getStandingMinutes(cal: Calendar): Int
 	{
 		/*

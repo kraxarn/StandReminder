@@ -126,11 +126,34 @@ object StateManager
 		// ...
 	}
 
-	fun getHoursStandingToday() : Array<Boolean>
+	fun getHoursStandingToday(db: DatabaseTools, sensorSensitivity: Int) : Array<Boolean>
 	{
-		val hours = arrayOf<Boolean>()
+		/*
+		 * 1. Get all standing minutes for today
+		 * 2. Go through each hour 0-23 and check
+		 * 3. Return new array
+		 */
 
-		// ...
+		val hours = Array(24) { false }
+
+		val allHours = db.getAllCurrentDay()
+
+		for (i in 0..23)
+		{
+			val current = allHours.filter { h -> h.added.get(Calendar.HOUR_OF_DAY) == i }
+
+			// TODO: For now we assume that if there are any values, they are more than one minute
+			for (c in current)
+			{
+				if (isStanding(c.value, sensorSensitivity))
+				{
+					hours[i] = true
+					continue
+				}
+			}
+
+			// We don't need to do anything else since all values are false by default
+		}
 
 		return hours
 	}
