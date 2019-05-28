@@ -62,19 +62,15 @@ class SettingsFragment : PreferenceFragmentCompat()
 					return@thread
 				}
 
-				// Node entries with strings to show in dialog
-				val entries = arrayOf<String>()
-				// Node IDs to save to preferences
-				val values  = arrayOf<String>()
+				// Display names to show in settings
+				wearDevice.entries = nodes.map {
+					node -> node.displayName
+				}.toTypedArray()
 
-				for ((i, node) in nodes.withIndex())
-				{
-					entries[i] = node.displayName
-					values[i]  = node.id
-				}
-
-				wearDevice.entries     = entries
-				wearDevice.entryValues = values
+				// IDs to save to preferences
+				wearDevice.entryValues = nodes.map {
+					node -> node.id
+				}.toTypedArray()
 			}
 
 		// Set correct version info
