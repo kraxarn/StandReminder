@@ -127,7 +127,7 @@ class SettingsFragment : PreferenceFragmentCompat()
 				activity?.runOnUiThread {
 					AlertTools.showSimple(context!!, Date().toString(), builder.toString())
 				}
-			}.start()
+			}
 			true
 		})
 
@@ -144,8 +144,7 @@ class SettingsFragment : PreferenceFragmentCompat()
 				activity?.runOnUiThread {
 					AlertTools.showSimple(context!!, "Debug Info", message)
 				}
-			}.start()
-
+			}
 			true
 		})
 	}
