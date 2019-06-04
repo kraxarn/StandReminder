@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<!-- Main app colors -->
+	<!-- Cyan 800 -->
 	<color name="colorPrimary">#00838f</color>
 	<color name="colorPrimaryDark">#005662</color>
+	<!-- Pink 700 -->
 	<color name="colorAccent">#c2185b</color>
-	<!-- Drawable colors -->
+	<!-- Grey 400 -->
 	<color name="colorEmoticon">#bdbdbd</color>
 </resources>
