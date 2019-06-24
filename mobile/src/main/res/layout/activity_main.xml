@@ -8,6 +8,14 @@
 	android:layout_height="match_parent"
 	tools:context=".MainActivity">
 
+	<com.google.android.material.appbar.MaterialToolbar
+		android:id="@+id/toolbar"
+		android:background="@color/colorPrimary"
+		android:theme="@style/Widget.MaterialComponents.ActionBar.Solid"
+		android:layout_width="match_parent"
+		android:layout_height="?attr/actionBarSize"
+		app:layout_constraintTop_toTopOf="parent"/>
+
 	<FrameLayout
 		android:id="@+id/layout_content"
 		android:layout_width="0dp"
@@ -15,11 +23,11 @@
 		app:layout_constraintBottom_toTopOf="@+id/view_navigation"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent"/>
+		app:layout_constraintTop_toBottomOf="@+id/toolbar"/>
 
 	<com.google.android.material.bottomnavigation.BottomNavigationView
 		android:id="@+id/view_navigation"
-		style="@style/Widget.MaterialComponents.BottomNavigationView.Colored"
+		style="@style/Widget.MaterialComponents.BottomNavigationView"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		app:layout_constraintBottom_toBottomOf="parent"

@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 	{
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_main)
+		setSupportActionBar(findViewById(R.id.toolbar))
 
 		// Set navigation bar color
 		window.navigationBarColor = ResourcesCompat.getColor(resources, R.color.colorPrimary, null)
