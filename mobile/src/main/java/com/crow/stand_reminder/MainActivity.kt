@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_main)
 		setSupportActionBar(findViewById(R.id.toolbar))
+		setTitle("Welcome")
 
 		// Set navigation bar color
 		window.navigationBarColor = ResourcesCompat.getColor(resources, R.color.colorPrimary, null)
@@ -49,20 +50,36 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 		density = resources.displayMetrics.density
 
 		// TESTING
+		/*
 		thread(true) {
 			Log.d("MAIN", "Waiting for sensor value...")
 			val v = DatabaseTools(this).getSensorValue()
 			Log.d("MAIN", "Found value: $v")
 		}
+		 */
+	}
+
+	private fun setTitle(title: String)
+	{
+		supportActionBar?.title = "Stand Reminder - $title"
 	}
 
 	private fun getFragmentFromId(id: Int): Fragment? =
 		when (id)
 		{
-			R.id.navigation_home     -> homeFragment
-			R.id.navigation_history  -> historyFragment
-			R.id.navigation_settings -> settingsFragment
-			else                     -> null
+			R.id.navigation_home -> {
+				setTitle("Home")
+				homeFragment
+			}
+			R.id.navigation_history -> {
+				setTitle("Journal")
+				historyFragment
+			}
+			R.id.navigation_settings -> {
+				setTitle("Settings")
+				settingsFragment
+			}
+			else -> null
 		}
 
 	override fun onNavigationItemSelected(menuItem: MenuItem): Boolean
