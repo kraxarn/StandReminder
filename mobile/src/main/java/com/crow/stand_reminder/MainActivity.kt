@@ -35,6 +35,12 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 		// Set navigation bar color
 		window.navigationBarColor = ResourcesCompat.getColor(resources, R.color.colorPrimary, null)
 
+		// Create notification channel for reminders
+		NotificationTools.createNotificationChannel(
+			this, "reminders", "Reminders", NotificationCompat.PRIORITY_DEFAULT)
+		NotificationTools.createNotificationChannel(
+			this, "general", "General", NotificationCompat.PRIORITY_DEFAULT)
+
 		// Preload all fragments
 		homeFragment     = HomeFragment()
 		historyFragment  = HistoryFragment()
