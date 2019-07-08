@@ -4,7 +4,7 @@
 	<!-- General -->
 	<PreferenceCategory
 		android:title="General">
-
+		<!--
 		<ListPreference
 			android:key="general_theme"
 			android:icon="@drawable/ic_palette"
@@ -13,6 +13,14 @@
 			android:entries="@array/general_theme_options"
 			android:entryValues="@array/general_theme_values"
 			android:defaultValue="auto"/>
+			-->
+		<SwitchPreference
+			android:key="general_black_background"
+			android:icon="@drawable/ic_palette"
+			android:title="@string/general_black_background"
+			android:summary="@string/general_black_background_info"
+			android:enabled="false"
+			android:defaultValue="false" />
 
 		<ListPreference
 			android:key="battery_frequency"

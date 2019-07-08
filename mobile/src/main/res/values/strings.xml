@@ -25,6 +25,11 @@
 		<item>night</item>
 		<item>midnight</item>
 	</string-array>
+	<string name="general_black_background">Midnight theme</string>
+	<string name="general_black_background_info">
+		Use a black background instead of a dark gray one
+		(only available in dark themes)
+	</string>
 	<string name="title_wear">Wear</string>
 	<string name="wear_update">Wear update frequency</string>
 	<string name="wear_update_info">
