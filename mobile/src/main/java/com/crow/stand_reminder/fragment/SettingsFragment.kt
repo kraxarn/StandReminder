@@ -4,11 +4,9 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.text.InputType
 import android.widget.Toast
-import androidx.preference.ListPreference
-import androidx.preference.Preference
-import androidx.preference.PreferenceCategory
-import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.*
 import com.crow.stand_reminder.BuildConfig
 import com.crow.stand_reminder.R
 import com.crow.stand_reminder.service.KeepAliveService
@@ -147,5 +145,10 @@ class SettingsFragment : PreferenceFragmentCompat()
 			}
 			true
 		})
+
+		// Workaround for number entry not working when set from XML
+		findPreference<EditTextPreference>("goal_hour")?.setOnBindEditTextListener { editText ->
+			editText.inputType = InputType.TYPE_CLASS_NUMBER
+		}
 	}
 }
