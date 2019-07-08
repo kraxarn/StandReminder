@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.crow.stand_reminder.data.CompletedHour
-import com.crow.stand_reminder.data.SensorValue
 import com.crow.stand_reminder.data.ValueSource
 import com.crow.stand_reminder.tool.DatabaseTools
 import com.crow.stand_reminder.tool.NotificationTools
@@ -38,7 +37,10 @@ object StateManager
 	 * TODO: This could possibly just be a list of values
 	 * TODO: Keep track of what hour this is and delete if old
 	 */
-	val values: MutableList<SensorValue> = mutableListOf()
+	private val values: MutableList<Float> = mutableListOf()
+
+	val temporaryValues: List<Float>
+		get() = values
 
 	/**
 	 * Does stuff and returns when the next
@@ -48,7 +50,7 @@ object StateManager
 			   preferences: AppPreferences, context: Context): CheckDelay
 	{
 		// Save value to temporary list
-		values += SensorValue(value, source)
+		values += value
 
 		// Check if current hour is already completed
 		// (Due to how we schedule next check, this should
@@ -65,7 +67,7 @@ object StateManager
 		// TODO: This ignores the watch
 
 		// Check how many standing values we have in the temporary list
-		return when (values.count { v -> isStanding(v.value, preferences.sensorSensitivity) })
+		return when (values.count { v -> isStanding(v, preferences.sensorSensitivity) })
 		{
 			// None yet, see if it's remind time, if it next, check again in 30 seconds
 			0 -> if (isRemindTime(preferences)) {

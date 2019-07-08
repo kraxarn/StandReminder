@@ -23,9 +23,6 @@ private class ServiceTask(val context: Context) : TimerTask()
 
 		// TODO: For testing only, just save a value every minute
 
-		// Get value and save in a different thread
-		DatabaseTools(context).saveValue()
-
 		// Update notification
 		OngoingNotificationManager.update(context,
 			"Updated on ${CalendarTools.format(Calendar.getInstance(), CalendarTools.Format.FULL)}")

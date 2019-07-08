@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.preference.*
 import com.crow.stand_reminder.BuildConfig
 import com.crow.stand_reminder.R
+import com.crow.stand_reminder.StateManager
 import com.crow.stand_reminder.service.KeepAliveService
 import com.crow.stand_reminder.tool.*
 import java.util.*
@@ -107,8 +108,8 @@ class SettingsFragment : PreferenceFragmentCompat()
 		// Show today values
 		setOnPreferenceClickListener("debug_show_today", Preference.OnPreferenceClickListener {
 			thread {
-				val values = DatabaseTools(context!!).getForDate(Calendar.getInstance())
-				val total  = DatabaseTools(context!!).values().values.size
+				val values = StateManager.temporaryValues
+				val total  = StateManager.temporaryValues.count()
 
 				if (values.isEmpty())
 				{
@@ -121,7 +122,7 @@ class SettingsFragment : PreferenceFragmentCompat()
 				val builder = StringBuilder()
 				for (value in values)
 				{
-					builder.append("${CalendarTools.format(value.added, CalendarTools.Format.FULL)}: ${value.value}\n")
+					builder.append("$value\n")
 				}
 				activity?.runOnUiThread {
 					AlertTools.showSimple(context!!, Date().toString(), builder.toString())
@@ -134,11 +135,16 @@ class SettingsFragment : PreferenceFragmentCompat()
 		setOnPreferenceClickListener("debug_info", Preference.OnPreferenceClickListener {
 			thread {
 				// Get database to show stuffs later
-				val db = DatabaseTools(context!!)
+				//val db = DatabaseTools(context!!)
 				// Prepare message
+				/*
 				val message = "ServiceRunning=${KeepAliveService.isRunning()}\n" +
 						"FirstDate=${if (db.values().values.isEmpty()) { "Empty" } else { CalendarTools.format(db.values().valuesAddedAsc[0].added, CalendarTools.Format.DATE) }}\n" +
 						"InstanceDate=${CalendarTools.format(Calendar.getInstance(), CalendarTools.Format.DATE)}"
+
+				 */
+				// TODO: Temporary
+				val message = "invalid request"
 				// Show alert
 				activity?.runOnUiThread {
 					AlertTools.showSimple(context!!, "Debug Info", message)
