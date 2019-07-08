@@ -12,4 +12,12 @@ class DataConverter
 	@TypeConverter
 	fun fromCalendar(value: Calendar): Long =
 			value.timeInMillis
+
+	@TypeConverter
+	fun toValueSource(value: String): ValueSource =
+		ValueSource.valueOf(value)
+
+	@TypeConverter
+	fun fromValueSource(value: ValueSource): String =
+		value.name
 }
