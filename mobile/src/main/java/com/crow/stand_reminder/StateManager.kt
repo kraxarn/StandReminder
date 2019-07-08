@@ -1,171 +1,126 @@
 package com.crow.stand_reminder
 
 import android.content.Context
+import android.util.Log
+import androidx.core.app.NotificationCompat
+import com.crow.stand_reminder.data.CompletedHour
 import com.crow.stand_reminder.data.SensorValue
+import com.crow.stand_reminder.data.ValueSource
 import com.crow.stand_reminder.tool.DatabaseTools
+import com.crow.stand_reminder.tool.NotificationTools
 import java.util.*
 
 object StateManager
 {
-	enum class State
+	enum class CheckDelay
 	{
-		UNKNOWN,
-		SITTING,
-		STANDING,
-		DONE
-	}
-
-	var state         = State.UNKNOWN
-	var previousState = State.UNKNOWN
-
-	enum class StateResponse
-	{
-		// Ignore
+		/**
+		 * Something unexpected happened
+		 */
+		INVALID,
+		/**
+		 * Next hour
+		 */
 		NONE,
-		// Remind the user to stand up
-		REMIND,
-		// This hour completed
-		OK
+		/**
+		 * 30 seconds
+		 */
+		HALF,
+		/**
+		 * Next check time
+		 */
+		FULL
 	}
 
-	fun update(context: Context, value: Float): StateResponse
+	/**
+	 * Temporary list of values that gets cleared
+	 * after every finished hour
+	 * TODO: This could possibly just be a list of values
+	 * TODO: Keep track of what hour this is and delete if old
+	 */
+	val values: MutableList<SensorValue> = mutableListOf()
+
+	/**
+	 * Does stuff and returns when the next
+	 * check should take place.
+	 */
+	fun update(value: Float, source: ValueSource, db: DatabaseTools,
+			   preferences: AppPreferences, context: Context): CheckDelay
 	{
-		/*
-		 * 1.	Get if we're standing or not
-		 * 2.	Register value to database
-		 * 		(assumes it doesn't go here again after goal reached for hour)
-		 * 3a.	If sitting and not remind time, ignore
-		 * 3b.	If sitting and remind time, remind
-		 * 3c.	If standing, but not previous check, save to database
-		 * 3d.	If standing and previous check, save to database and set next check for :00
-		 */
+		// Save value to temporary list
+		values += SensorValue(value, source)
 
-		// TODO: This currently ignores the watch
-
-		// Preferences to use later
-		val preferences = AppPreferences(context)
-
-		// Get new state and update database
-		state = getState(context, value)
-
-		// Get response depending on state
-		val response: StateResponse = when (state)
+		// Check if current hour is already completed
+		// (Due to how we schedule next check, this should
+		// never happen, but who knows)
+		if (db.isCompleted(Calendar.getInstance()))
 		{
-			// User is sitting and time to remind (first or second time)
-			State.SITTING ->
-				if (isRemindTime(preferences.notificationRemind) || isRemindTime(preferences.secondNotificationRemind))
-					StateResponse.REMIND
-				else
-					StateResponse.NONE
-			// User is standing up and previous minute
-			State.STANDING ->
-				if (previousState == State.STANDING)
-					StateResponse.OK
-				else
-					StateResponse.NONE
-			// Anything else, ignore
-			else -> StateResponse.NONE
+			// We don't need to add anything to the
+			// database since it's already there
+			values.clear()
+			return CheckDelay.NONE
 		}
 
-		// Update previous state before returning
-		previousState = state
+		// TODO: This assumes we're checking once per minute
+		// TODO: This ignores the watch
 
-		return response
-	}
-
-	private fun isRemindTime(remindTime: Int): Boolean
-	{
-		/*
-		 * TODO:
-		 * This sort of assumes that it will only
-		 * check this once every minute, which it
-		 * probably is unless we specified something
-		 * else in the settings, so that should also
-		 * be checked. Easiest way is to just keep a
-		 * timestamp from when we checked last time
-		 * and see if that was long enough ago.
-		 *
-		 * But, for now:
-		 */
-		return Calendar.getInstance().get(Calendar.MINUTE) == remindTime
-	}
-
-	private fun getState(context: Context, value: Float): State
-	{
-		val db          = DatabaseTools(context)
-		val preferences = AppPreferences(context)
-
-		// Save value to database
-		db.values().insertAll(SensorValue(value))
-
-		// All values for the current hour
-		//val values = db.getAllCurrentHour()
-
-		// First, we check if we have reached our goal this hour
-		val standing = db.getStandingMinutes(Calendar.getInstance())
-
-		return when
+		// Check how many standing values we have in the temporary list
+		return when (values.count { v -> isStanding(v.value, preferences.sensorSensitivity) })
 		{
-			// If we have already stood up
-			standing >= preferences.goalHours * 60 -> State.DONE
-			// We're standing up now
-			isStanding(value, preferences.sensorSensitivity) -> State.STANDING
-			// Not done or standing, must be sitting
-			else -> State.SITTING
+			// None yet, see if it's remind time, if it next, check again in 30 seconds
+			0 -> if (isRemindTime(preferences)) {
+				// TODO: Send reminder to user
+				// TODO: Notification should only be sent once
+				// 1010 is the persistent notification
+				NotificationTools.showSimple(context, 1015, "reminders",
+					R.string.reminder_title, R.string.reminder_text)
+				CheckDelay.HALF
+			} else {
+				// Not standing, but not remind time, ignore
+				CheckDelay.FULL
+			}
+			// We're standing now, check again in 30 seconds
+			1 -> CheckDelay.HALF
+			// We finished, show notification and check again next hour
+			2 -> {
+				// Save hour to database, clear temp variables and return NONE
+				db.addCompleted(CompletedHour(Calendar.getInstance(), source))
+				values.clear()
+				CheckDelay.NONE
+			}
+			// Should never get here and could probably
+			// be included in one of the above
+			else -> {
+				NotificationTools.showSimple(context, 1020, "general",
+					"Oh no!", "Unexpected values found, this is a bug!")
+				CheckDelay.INVALID
+			}
 		}
+
+		// TODO: This shouldn't be here
+		/*
+		if (values.count { v -> isStanding(v.value, preferences.sensorSensitivity) } >= 2)
+		{
+			// Hour is already completed, schedule for next hour
+			values.clear()
+			return CheckDelay.NONE
+		}
+		 */
 	}
 
-	fun isStanding(value: Float, sensorSensitivity: Int): Boolean
+	/**
+	 * Checks if value is smaller than sensitivity or larger than -sensitivity
+	 */
+	private fun isStanding(value: Float, sensitivity: Int): Boolean
 	{
-		val threshold = sensorSensitivity / 10f
+		val threshold = sensitivity / 10f
 		return value > threshold || value < -threshold
 	}
 
-	fun getMinutesStandingThisHour()
+	private fun isRemindTime(preferences: AppPreferences): Boolean
 	{
-		// ...
-	}
-
-	fun getHoursStandingToday(db: DatabaseTools, sensorSensitivity: Int) : Array<Boolean>
-	{
-		/*
-		 * 1. Get all standing minutes for today
-		 * 2. Go through each hour 0-23 and check
-		 * 3. Return new array
-		 */
-
-		val hours = Array(24) { false }
-
-		val allHours = db.getAllCurrentDay()
-
-		for (i in 0..23)
-		{
-			val current = allHours.filter { h -> h.added.get(Calendar.HOUR_OF_DAY) == i }
-
-			// TODO: For now we assume that if there are any values, they are more than one minute
-			for (c in current)
-			{
-				if (isStanding(c.value, sensorSensitivity))
-				{
-					hours[i] = true
-					continue
-				}
-			}
-
-			// We don't need to do anything else since all values are false by default
-		}
-
-		return hours
-	}
-
-	fun getTotalHoursToday() : Int
-	{
-		var i = 0
-
-		for (h in getHoursStandingToday())
-			if (h)
-				i++
-
-		return i
+		val minute = Calendar.getInstance().get(Calendar.MINUTE)
+		return minute == preferences.notificationRemind
+			|| minute == preferences.secondNotificationRemind
 	}
 }
