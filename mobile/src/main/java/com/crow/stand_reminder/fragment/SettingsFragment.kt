@@ -1,6 +1,7 @@
 package com.crow.stand_reminder.fragment
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
@@ -146,9 +147,14 @@ class SettingsFragment : PreferenceFragmentCompat()
 			true
 		})
 
+		// Enable black background switch if using dark mode
+		findPreference<SwitchPreference>("general_black_background")?.isEnabled =
+			resources.configuration.uiMode and
+				Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+
 		// Workaround for number entry not working when set from XML
-		findPreference<EditTextPreference>("goal_hour")?.setOnBindEditTextListener { editText ->
-			editText.inputType = InputType.TYPE_CLASS_NUMBER
+		findPreference<EditTextPreference>("goal_hour")?.setOnBindEditTextListener {
+			editText -> editText.inputType = InputType.TYPE_CLASS_NUMBER
 		}
 	}
 }
