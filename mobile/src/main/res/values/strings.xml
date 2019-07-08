@@ -6,6 +6,13 @@
 	<string name="title_home">Home</string>
 	<string name="title_history">Journal</string>
 	<string name="title_settings">Settings</string>
+
+	<!-- Notification -->
+	<string name="reminder_title">Hey you!</string>
+	<string name="reminder_text">
+		You\'ve been sitting for too long,
+		time to stand up and move around for a bit!
+	</string>
 	
 	<!-- region Settings -->
 	<string name="title_general">General</string>
