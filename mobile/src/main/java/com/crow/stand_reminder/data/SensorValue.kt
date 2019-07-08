@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 import java.util.*
 
 @Entity
-data class SensorValue(val value: Float)
+data class SensorValue(val value: Float, val source: ValueSource)
 {
 	@PrimaryKey
 	var added: Calendar = Calendar.getInstance()
