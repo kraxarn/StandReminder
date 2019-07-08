@@ -1,22 +1,17 @@
 package com.crow.stand_reminder
 
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.crow.stand_reminder.fragment.HistoryFragment
 import com.crow.stand_reminder.fragment.HomeFragment
 import com.crow.stand_reminder.fragment.SettingsFragment
-import com.crow.stand_reminder.tool.DatabaseTools
 import com.crow.stand_reminder.tool.NavigationTools
+import com.crow.stand_reminder.tool.NotificationTools
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import java.util.*
-import kotlin.concurrent.fixedRateTimer
-import kotlin.concurrent.thread
-import kotlin.concurrent.timer
-import kotlin.concurrent.timerTask
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener
 {
@@ -54,15 +49,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
 		// Set density for hour chips
 		density = resources.displayMetrics.density
-
-		// TESTING
-		/*
-		thread(true) {
-			Log.d("MAIN", "Waiting for sensor value...")
-			val v = DatabaseTools(this).getSensorValue()
-			Log.d("MAIN", "Found value: $v")
-		}
-		 */
 	}
 
 	private fun setTitle(title: String)

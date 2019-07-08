@@ -21,7 +21,7 @@ object WearTools
 		}
 		catch (e: ExecutionException)
 		{
-			Log.w("WEAR", e.message)
+			Log.w("WEAR", e.message ?: "ExecutionException")
 			null
 		}
 		catch (e: InterruptedException)

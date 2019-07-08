@@ -28,15 +28,9 @@ object OngoingNotificationManager
 	fun update(context: Context, text: String)
 	{
 		if (enabled)
-			NotificationTools.show(
-				context,
-				notificationId,
-				channelId,
-				R.drawable.ic_human_greeting,
-				context.getString(R.string.app_name),
-				text,
-				NotificationCompat.PRIORITY_DEFAULT,
-				true)
+			NotificationTools.show(context, notificationId, channelId,
+				R.drawable.ic_human_greeting, context.getString(R.string.app_name),
+				text, NotificationCompat.PRIORITY_DEFAULT, true)
 	}
 
 	fun resume()
