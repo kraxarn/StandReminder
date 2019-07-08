@@ -7,12 +7,10 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import androidx.room.Room
 import com.crow.stand_reminder.AppPreferences
-import com.crow.stand_reminder.StateManager
+import com.crow.stand_reminder.StateManagerOld
 import com.crow.stand_reminder.data.AppDatabase
+import com.crow.stand_reminder.data.CompletedHour
 import com.crow.stand_reminder.data.SensorValue
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import java.io.Closeable
 import java.util.*
 import kotlin.concurrent.thread
@@ -27,6 +25,31 @@ class DatabaseTools(private val context: Context) : Closeable
 
 	fun values() =
 		database.values()
+
+	fun completed() =
+		database.completed().values
+
+	private fun compareCalendar(date1: Calendar, date2: Calendar, field: Int) =
+		date1.get(field) == date2.get(field)
+
+	fun isCompleted(date: Calendar) =
+		completed().any { value ->
+			compareCalendar(value.date, date, Calendar.YEAR) &&
+				compareCalendar(value.date, date, Calendar.MONTH) &&
+				compareCalendar(value.date, date, Calendar.DAY_OF_MONTH) &&
+				compareCalendar(value.date, date, Calendar.HOUR_OF_DAY)
+		}
+
+	fun addCompleted(completed: CompletedHour)
+	{
+		// Ignore minutes and seconds
+		completed.date.set(Calendar.MINUTE,      0)
+		completed.date.set(Calendar.SECOND,      0)
+		completed.date.set(Calendar.MILLISECOND, 0)
+
+		// Add it to the database
+		database.completed().insertAll(completed)
+	}
 
 	fun getForDate(date: Calendar): List<SensorValue>
 	{
