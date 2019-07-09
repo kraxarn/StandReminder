@@ -86,7 +86,6 @@ object StateManager
 			return CheckDelay.NONE
 		}
 
-		// TODO: This assumes we're checking once per minute
 		// TODO: This ignores the watch
 
 		// Check how many standing values we have in the temporary list
