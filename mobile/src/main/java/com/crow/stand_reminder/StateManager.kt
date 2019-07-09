@@ -43,6 +43,16 @@ object StateManager
 		get() = values
 
 	/**
+	 * Last hour a first reminder was sent
+	 */
+	var lastRemindedHour  = -1
+
+	/**
+	 * Last hour a second reminder was sent
+	 */
+	var lastRemindedHour2 = -1
+
+	/**
 	 * Does stuff and returns when the next
 	 * check should take place.
 	 */
@@ -121,8 +131,24 @@ object StateManager
 
 	private fun isRemindTime(preferences: AppPreferences): Boolean
 	{
-		val minute = Calendar.getInstance().get(Calendar.MINUTE)
-		return minute == preferences.notificationRemind
-			|| minute == preferences.secondNotificationRemind
+		val now    = Calendar.getInstance()
+		val hour   = now.get(Calendar.HOUR_OF_DAY)
+		val minute = now.get(Calendar.MINUTE)
+
+		// First reminder
+		if (minute > preferences.notificationRemind && lastRemindedHour < hour)
+		{
+			lastRemindedHour = hour
+			return true
+		}
+
+		// Second reminder
+		if (minute > preferences.secondNotificationRemind && lastRemindedHour2 < hour)
+		{
+			lastRemindedHour2 = hour
+			return true
+		}
+
+		return false
 	}
 }
