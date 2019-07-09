@@ -15,7 +15,7 @@
 			android:defaultValue="auto"/>
 			-->
 		<SwitchPreference
-			android:key="general_black_background"
+			android:key="black_background"
 			android:icon="@drawable/ic_palette"
 			android:title="@string/general_black_background"
 			android:summary="@string/general_black_background_info"

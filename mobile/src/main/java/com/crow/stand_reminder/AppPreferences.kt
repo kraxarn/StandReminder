@@ -20,9 +20,12 @@ class AppPreferences(context: Context) : PreferenceDataStore()
 	}
 
 	// region General
-
+	@Deprecated("Replaced with black background")
 	val theme: Theme
 		get() = Theme.valueOf(preferences.getString("general_theme", null) ?: "auto")
+
+	val blackBackground: Boolean
+		get() = preferences.getBoolean("black_background", false)
 
 	/**
 	 * How often to refresh in minutes

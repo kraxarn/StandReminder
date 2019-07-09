@@ -27,6 +27,9 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 		setSupportActionBar(findViewById(R.id.toolbar))
 		setTitle("Welcome")
 
+		if (AppPreferences(this).blackBackground)
+			setTheme(R.style.AppTheme_Black)
+
 		// Set navigation bar color
 		window.navigationBarColor = ResourcesCompat.getColor(resources, R.color.colorPrimary, null)
 
