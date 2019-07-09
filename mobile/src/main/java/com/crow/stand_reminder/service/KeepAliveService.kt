@@ -69,19 +69,22 @@ private class ServiceTask(val context: Context) : TimerTask()
 					val next = StateManager.update(event.values[1], ValueSource.MOBILE,
 						database, preferences, context)
 
-					// Update notification
-					OngoingNotificationManager.update(context,
-						"Updated on ${CalendarTools.format(Calendar.getInstance(),
-							CalendarTools.Format.FULL)} (${next.name})")
-
-					// Schedule next check (in milliseconds)
-					schedule(context, when (next)
+					// Temp
+					val nextMs = when (next)
 					{
 						StateManager.CheckDelay.NONE -> minutesToNextHour * 1000L * 60L
 						StateManager.CheckDelay.HALF -> 30L * 1000L
 						StateManager.CheckDelay.FULL -> 60L * 1000L // TODO: Don't check every minute
 						else -> -1L
-					})
+					}
+
+					// Update notification
+					OngoingNotificationManager.update(context,
+						"Updated on ${CalendarTools.format(Calendar.getInstance(),
+							CalendarTools.Format.FULL)} (${next.name} in ${nextMs / 60000L}m)")
+
+					// Schedule next check (in milliseconds)
+					schedule(context, nextMs)
 				}
 			}
 		}, sensorTools.sensor, SensorManager.SENSOR_DELAY_NORMAL)
