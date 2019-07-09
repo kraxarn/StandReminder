@@ -23,14 +23,6 @@ private class ServiceTask(val context: Context) : Runnable
 
 	override fun run()
 	{
-		// Check if we should be running
-		if (!KeepAliveService.isRunning())
-		{
-			OngoingNotificationManager.update(context,"Task running, but not service")
-			//timer.cancel()
-			//return
-		}
-
 		// Update notification
 		OngoingNotificationManager.update(context,"Updating...")
 
@@ -125,9 +117,6 @@ class KeepAliveService : Service()
 
 	private fun stop()
 	{
-		// Stop the thread
-		interrupt()
-
 		// Stop the service and remove notification
 		stopForeground(true)
 	}
@@ -151,18 +140,7 @@ class KeepAliveService : Service()
 	// Companion object for static fields
 	companion object
 	{
-		private var thread: Thread? = null
-
 		const val ACTION_START_SERVICE = "ACTION_START_SERVICE"
 		const val ACTION_STOP_SERVICE  = "ACTION_STOP_SERVICE"
-
-		fun isRunning() =
-			thread?.isAlive ?: false
-
-		fun interrupt()
-		{
-			if (thread != null)
-				thread!!.interrupt()
-		}
 	}
 }
