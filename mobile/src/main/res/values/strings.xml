@@ -162,7 +162,7 @@
 	<string name="battery_frequency">Update frequency</string>
 	<string name="battery_frequency_info">
 		How often the application should check if you are
-		standing up
+		standing up (longer delay may cause the app to be closed)
 	</string>
 	<string-array name="battery_frequency_options">
 		<item>1 minute</item>
