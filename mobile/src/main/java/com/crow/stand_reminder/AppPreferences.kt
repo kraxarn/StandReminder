@@ -28,7 +28,7 @@ class AppPreferences(context: Context) : PreferenceDataStore()
 	 * How often to refresh in minutes
 	 */
 	val batteryFrequency: Int
-		get() = preferences.getInt("battery_frequency", 2)
+		get() = preferences.getString("battery_frequency", null)?.toInt() ?: 2
 
 	// endregion
 
@@ -44,7 +44,7 @@ class AppPreferences(context: Context) : PreferenceDataStore()
 	 * How many times the main device has to fail before checking Wear
 	 */
 	val wearUpdate: Int
-		get() = getInt("wear_update", 2)
+		get() = getString("wear_update", null)?.toInt() ?: 2
 
 	/**
 	 * If the main device should always be skipped and only use Wear
@@ -60,7 +60,7 @@ class AppPreferences(context: Context) : PreferenceDataStore()
 	 * @return Number of hours as goal for each day
 	 */
 	val goalHours: Int
-		get() = Integer.parseInt(getString("goal_hour", "12")!!)
+		get() = getString("goal_hour", null)?.toInt() ?: 12
 
 	/**
 	 * If it should keep reminding after the goal has been reached
@@ -76,13 +76,13 @@ class AppPreferences(context: Context) : PreferenceDataStore()
 	 * At what minute it should remind for the first time
 	 */
 	val notificationRemind: Int
-		get() = getInt("notification_remind", 30)
+		get() = getString("notification_remind", null)?.toInt() ?: 30
 
 	/**
 	 * At what minute it should remind for the second time
 	 */
 	val secondNotificationRemind: Int
-		get() = getInt("notification_second_remind", 50)
+		get() = getString("notification_second_remind", null)?.toInt() ?: 50
 
 	// endregion
 
@@ -92,7 +92,7 @@ class AppPreferences(context: Context) : PreferenceDataStore()
 	 * When the sensor value counts as standing up, 0-100 (0-10 with sensor)
 	 */
 	val sensorSensitivity: Int
-		get() = getInt("sensor_sensitivity", 75)
+		get() = getString("sensor_sensitivity", null)?.toInt() ?: 75
 
 	/**
 	 * If we should use the gravity sensor instead of the accelerometer
