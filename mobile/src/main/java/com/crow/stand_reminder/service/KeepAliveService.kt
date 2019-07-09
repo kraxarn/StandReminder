@@ -4,32 +4,87 @@ import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import android.os.IBinder
 import android.util.Log
+import android.widget.Toast
 import androidx.core.app.NotificationCompat
+import com.crow.stand_reminder.AppPreferences
 
 import com.crow.stand_reminder.R
+import com.crow.stand_reminder.StateManager
+import com.crow.stand_reminder.data.ValueSource
 import com.crow.stand_reminder.tool.CalendarTools
 import com.crow.stand_reminder.tool.DatabaseTools
+import com.crow.stand_reminder.tool.SensorTools
 import java.util.*
 import kotlin.concurrent.thread
 import kotlin.concurrent.timerTask
 
 private class ServiceTask(val context: Context) : TimerTask()
 {
+	private val sensorTools = SensorTools(context)
+	private val database    = DatabaseTools(context)
+	private val preferences = AppPreferences(context)
+
 	override fun run()
 	{
-		Log.d("SERVICE_TASK", "Running...")
-
-		// TODO: For testing only, just save a value every minute
+		// Check if we should be running
+		if (!KeepAliveService.isRunning())
+		{
+			OngoingNotificationManager.update(context,"Task running, but not service")
+			//timer.cancel()
+			//return
+		}
 
 		// Update notification
-		OngoingNotificationManager.update(context,
-			"Updated on ${CalendarTools.format(Calendar.getInstance(), CalendarTools.Format.FULL)}")
+		OngoingNotificationManager.update(context,"Updating...")
 
-		// Schedule next check
-		// TODO: Set next time depending on what we did
-		schedule(context, 1000)
+		// Get value
+		sensorTools.sensorManager.registerListener(object : SensorEventListener
+		{
+			override fun onAccuracyChanged(p0: Sensor?, p1: Int)
+			{
+			}
+
+			override fun onSensorChanged(event: SensorEvent?)
+			{
+				// Ignore if null
+				if (event == null)
+				{
+					Log.e("KeepAliveService", "Sensor updated without value")
+					return
+				}
+
+				// We only want one value
+				sensorTools.sensorManager.unregisterListener(this)
+
+				// We do the rest from another thread
+				thread(true)
+				{
+					// Do stuff with value
+					val next = StateManager.update(event.values[1], ValueSource.MOBILE,
+						database, preferences, context)
+
+					// Update notification
+					OngoingNotificationManager.update(context,
+						"Updated on ${CalendarTools.format(Calendar.getInstance(),
+							CalendarTools.Format.FULL)} (${next.name})")
+
+					// Schedule next check (in milliseconds)
+					schedule(context, when (next)
+					{
+						StateManager.CheckDelay.NONE -> minutesToNextHour * 1000L * 60L
+						StateManager.CheckDelay.HALF -> 30L * 1000L
+						StateManager.CheckDelay.FULL -> 60L * 1000L // TODO: Don't check every minute
+						else -> -1L
+					})
+				}
+			}
+		}, sensorTools.sensor, SensorManager.SENSOR_DELAY_NORMAL)
 	}
 
 	companion object
@@ -39,8 +94,8 @@ private class ServiceTask(val context: Context) : TimerTask()
 		fun schedule(context: Context, delay: Long) =
 			timer.schedule(ServiceTask(context), delay)
 
-		fun getMinutesToNextHour(): Int =
-			60 - Calendar.getInstance().get(Calendar.MINUTE)
+		private val minutesToNextHour
+			get() = 60 - Calendar.getInstance().get(Calendar.MINUTE)
 	}
 }
 
