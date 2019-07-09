@@ -43,14 +43,19 @@ object StateManager
 		get() = values
 
 	/**
+	 * What hour the temporary values belong to
+	 */
+	private var temporaryValuesHour = -1
+
+	/**
 	 * Last hour a first reminder was sent
 	 */
-	var lastRemindedHour  = -1
+	private var lastRemindedHour  = -1
 
 	/**
 	 * Last hour a second reminder was sent
 	 */
-	var lastRemindedHour2 = -1
+	private var lastRemindedHour2 = -1
 
 	/**
 	 * Does stuff and returns when the next
@@ -61,6 +66,14 @@ object StateManager
 	{
 		// Save value to temporary list
 		values += value
+
+		// Check if temporary values are from previous hour
+		val hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+		if (hour > temporaryValuesHour)
+		{
+			temporaryValuesHour = hour
+			values.clear()
+		}
 
 		// Check if current hour is already completed
 		// (Due to how we schedule next check, this should
