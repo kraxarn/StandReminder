@@ -52,17 +52,6 @@ private class ServiceTask(val context: Context) : Runnable
 					val next = StateManager.update(event.values[1], ValueSource.MOBILE,
 						database, preferences, context)
 
-					// TODO: Having longer delays seem to kill the app
-					/*
-					var nextMs = when (next)
-					{
-						StateManager.CheckDelay.NONE -> minutesToNextHour * 1000L * 60L
-						StateManager.CheckDelay.HALF -> 30L * 1000L
-						StateManager.CheckDelay.FULL -> 60L * 1000L
-						else -> -1L
-					}
-					 */
-
 					// Get from preferences (in minutes) when to refresh next
 					val nextMs = preferences.batteryFrequency * 60L * 1000L
 

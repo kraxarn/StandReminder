@@ -108,16 +108,6 @@ object StateManager
 				CheckDelay.INVALID
 			}
 		}
-
-		// TODO: This shouldn't be here
-		/*
-		if (values.count { v -> isStanding(v.value, preferences.sensorSensitivity) } >= 2)
-		{
-			// Hour is already completed, schedule for next hour
-			values.clear()
-			return CheckDelay.NONE
-		}
-		 */
 	}
 
 	/**
