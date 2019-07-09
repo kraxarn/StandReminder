@@ -80,14 +80,15 @@ object StateManager
 		return when (values.count { v -> isStanding(v, preferences.sensorSensitivity) })
 		{
 			// None yet, see if it's remind time, if it next, check again in 30 seconds
-			0 -> if (isRemindTime(preferences)) {
-				// TODO: Send reminder to user
-				// TODO: Notification should only be sent once
+			0 -> if (isRemindTime(preferences))
+			{
 				// 1010 is the persistent notification
 				NotificationTools.showSimple(context, 1015, "reminders",
 					R.string.reminder_title, R.string.reminder_text)
 				CheckDelay.HALF
-			} else {
+			}
+			else
+			{
 				// Not standing, but not remind time, ignore
 				CheckDelay.FULL
 			}
