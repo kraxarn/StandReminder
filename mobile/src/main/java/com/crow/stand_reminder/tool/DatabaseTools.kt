@@ -61,6 +61,9 @@ class DatabaseTools(context: Context) : Closeable
 			}
 		}
 
+	val firstCompleted
+		get() = completed().firstOrNull()
+
 	fun drop() =
 		database.clearAllTables()
 }
