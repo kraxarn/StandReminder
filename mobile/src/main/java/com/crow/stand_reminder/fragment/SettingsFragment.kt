@@ -7,13 +7,13 @@ import android.os.Bundle
 import android.provider.Settings
 import android.text.InputType
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.preference.*
-import com.crow.stand_reminder.BuildConfig
+import com.crow.stand_reminder.*
 import com.crow.stand_reminder.R
-import com.crow.stand_reminder.StateManager
-import com.crow.stand_reminder.service.KeepAliveService
 import com.crow.stand_reminder.tool.*
-import java.util.*
+import com.google.android.material.snackbar.Snackbar
+import java.io.Serializable
 import kotlin.concurrent.thread
 
 class SettingsFragment : PreferenceFragmentCompat()
@@ -106,7 +106,54 @@ class SettingsFragment : PreferenceFragmentCompat()
 		})
 
 		// Show today values
-		setOnPreferenceClickListener("debug_show_today", Preference.OnPreferenceClickListener {
+		setOnPreferenceClickListener("debug_show_values", Preference.OnPreferenceClickListener {
+			activity?.let {
+				AlertDialog.Builder(it).apply {
+					setTitle("Select Values to Show")
+					setItems(arrayOf("Today", "This Hour")) { _, i ->
+						thread(true)
+						{
+							// Default value
+							val values = mutableListOf<Pair<String, String>>()
+							var title  = "No Values"
+
+							when (i)
+							{
+								// Today (get from db)
+								0 -> {
+									// Get the temporary values
+									values += DatabaseTools(context).getCompletedToday().map { v ->
+										Pair(v.date.toString(), v.source.name)
+									}
+									// Set values to show in dialog
+									title = "Today (${values.count()} values)"
+								}
+								// This hour (get from temporary values)
+								1 -> {
+									values += StateManager.temporaryValues.map { v ->
+										Pair("value", v.toString())
+									}
+									title = "This Hour (${values.count()} values)"
+								}
+							}
+							// Format text with builder
+							val builder = StringBuilder()
+							for (value in values)
+								builder.append("$value\n")
+							// Show dialog
+							activity?.runOnUiThread {
+								AlertTools.showSimple(context, title,
+									if (values.count() == 0) "No values found"
+									else builder.toString())
+							}
+						}
+					}
+					show()
+				}
+			}
+
+			// To show values for today
+			/*
 			thread {
 				val values = StateManager.temporaryValues
 				val total  = StateManager.temporaryValues.count()
@@ -128,6 +175,8 @@ class SettingsFragment : PreferenceFragmentCompat()
 					AlertTools.showSimple(context!!, Date().toString(), builder.toString())
 				}
 			}
+			 */
+
 			true
 		})
 

@@ -29,16 +29,43 @@ class DatabaseTools(context: Context) : Closeable
 				compareCalendar(value.date, date, Calendar.HOUR_OF_DAY)
 		}
 
+	/**
+	 * Sets minute, second and millisecond to 0
+	 */
+	private fun Calendar.resetMinutes()
+	{
+		(this).apply {
+			set(Calendar.MINUTE, 0)
+			set(Calendar.SECOND, 0)
+			set(Calendar.MILLISECOND, 0)
+		}
+	}
+
+	private fun Calendar.toResetMinutes(): Calendar =
+		this.apply {
+			resetMinutes()
+		}
+
+	private fun Calendar.toResetHours(): Calendar =
+		this.apply {
+			resetMinutes()
+			set(Calendar.HOUR_OF_DAY, 0)
+		}
+
 	fun addCompleted(completed: CompletedHour)
 	{
 		// Ignore minutes and seconds
-		completed.date.set(Calendar.MINUTE,      0)
-		completed.date.set(Calendar.SECOND,      0)
-		completed.date.set(Calendar.MILLISECOND, 0)
-
+		completed.date.resetMinutes()
 		// Add it to the database
 		database.completed().insertAll(completed)
 	}
+
+	fun getCompletedToday(): List<CompletedHour> =
+		Calendar.getInstance().toResetHours().let {
+			return completed().filter { c ->
+				c.date.toResetHours() == it
+			}
+		}
 
 	fun drop() =
 		database.clearAllTables()

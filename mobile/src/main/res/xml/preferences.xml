@@ -175,17 +175,14 @@
 			android:summary="Delete all values saved in the database"/>
 
 		<Preference
-			android:key="debug_show_today"
-			android:title="Show all values for today"
-			android:summary="Show all values that has been recorded for today"/>
+			android:key="debug_show_values"
+			android:title="Show raw values"
+			android:summary="Show all values that has been recorded"/>
 
 		<Preference
 			android:key="debug_info"
 			android:title="Show debug info"
 			android:summary="Show general information useful for debugging and bug tracking"/>
-
-
-
 	</PreferenceCategory>
 
 </PreferenceScreen>
