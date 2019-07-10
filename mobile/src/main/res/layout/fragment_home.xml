@@ -51,11 +51,13 @@
 				android:textSize="@dimen/text_h5"
 				android:text="5/12 hours today"/>
 
+			<!-- TODO: Unused -->
 			<androidx.recyclerview.widget.RecyclerView
 				android:id="@+id/list_hour_chips"
 				android:layout_marginTop="16dp"
 				android:layout_width="match_parent"
-				android:layout_height="wrap_content"/>
+				android:layout_height="wrap_content"
+				android:visibility="gone"/>
 
 			<GridView
 				android:id="@+id/list_hour_chips_grid"
