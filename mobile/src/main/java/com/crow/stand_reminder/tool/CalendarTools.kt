@@ -24,7 +24,7 @@ object CalendarTools
 	private val df2: DecimalFormat = DecimalFormat("00")
 
 	private fun formatDate(cal: Calendar) =
-			"${cal.get(Calendar.YEAR)}-${df2.format(cal.get(Calendar.MONTH))}-${df2.format(cal.get(Calendar.DAY_OF_MONTH))}"
+			"${cal.get(Calendar.YEAR)}-${df2.format(cal.get(Calendar.MONTH) + 1)}-${df2.format(cal.get(Calendar.DAY_OF_MONTH))}"
 
 	private fun formatTime(cal: Calendar) =
 			"${df2.format(cal.get(Calendar.HOUR_OF_DAY))}:${df2.format(cal.get(Calendar.MINUTE))}:${df2.format(cal.get(Calendar.SECOND))}"
