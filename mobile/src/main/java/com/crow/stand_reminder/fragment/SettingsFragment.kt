@@ -153,10 +153,25 @@ class SettingsFragment : PreferenceFragmentCompat()
 			true
 		})
 
+		val blackBackground = findPreference<SwitchPreference>("black_background")
+
 		// Enable black background switch if using dark mode
-		findPreference<SwitchPreference>("general_black_background")?.isEnabled =
+		blackBackground?.isEnabled =
 			resources.configuration.uiMode and
 				Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+
+		blackBackground?.setOnPreferenceChangeListener { _, _ ->
+			activity?.setTheme(R.style.AppTheme_Black)
+			Snackbar.make(activity!!.findViewById(R.id.layout_content),
+				"Restart to (properly) apply changes", Snackbar.LENGTH_LONG).apply {
+				setAnchorView(R.id.view_navigation)
+				setAction("Restart Now") {
+					activity?.recreate()
+				}
+				show()
+			}
+			true
+		}
 
 		// Workaround for number entry not working when set from XML
 		findPreference<EditTextPreference>("goal_hour")?.setOnBindEditTextListener {
