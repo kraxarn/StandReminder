@@ -46,12 +46,6 @@ class DatabaseTools(context: Context) : Closeable
 			resetMinutes()
 		}
 
-	private fun Calendar.toResetHours(): Calendar =
-		this.apply {
-			resetMinutes()
-			set(Calendar.HOUR_OF_DAY, 0)
-		}
-
 	fun addCompleted(completed: CompletedHour)
 	{
 		// Ignore minutes and seconds
@@ -61,9 +55,9 @@ class DatabaseTools(context: Context) : Closeable
 	}
 
 	fun getCompletedToday(): List<CompletedHour> =
-		Calendar.getInstance().toResetHours().let {
+		Calendar.getInstance().toResetMinutes().let {
 			return completed().filter { c ->
-				c.date.toResetHours() == it
+				c.date == it
 			}
 		}
 
