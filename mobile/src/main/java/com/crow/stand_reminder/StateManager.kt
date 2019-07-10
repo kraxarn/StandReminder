@@ -68,11 +68,12 @@ object StateManager
 		values += value
 
 		// Check if temporary values are from previous hour
-		val hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
-		if (hour > temporaryValuesHour)
-		{
-			temporaryValuesHour = hour
-			values.clear()
+		Calendar.getInstance().get(Calendar.HOUR_OF_DAY).let {
+			if (it > temporaryValuesHour)
+			{
+				temporaryValuesHour = it
+				values.clear()
+			}
 		}
 
 		// Check if current hour is already completed
@@ -126,11 +127,10 @@ object StateManager
 	/**
 	 * Checks if value is smaller than sensitivity or larger than -sensitivity
 	 */
-	private fun isStanding(value: Float, sensitivity: Int): Boolean
-	{
-		val threshold = sensitivity / 10f
-		return value > threshold || value < -threshold
-	}
+	private fun isStanding(value: Float, sensitivity: Int): Boolean =
+		(sensitivity / 10f).let {
+			value > it || value < -it
+		}
 
 	private fun isRemindTime(preferences: AppPreferences): Boolean
 	{
