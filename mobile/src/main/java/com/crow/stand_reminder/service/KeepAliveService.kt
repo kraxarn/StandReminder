@@ -98,16 +98,30 @@ class KeepAliveService : Service()
 
 	private fun start()
 	{
+		if (running)
+		{
+			Log.w("KeepAliveService", "Requested to start, but already running")
+			return
+		}
+
 		Log.i("SERVICE", "Starting foreground service...")
 		ServiceTask.schedule(ServiceTask(this), 1000)
 
 		startForeground()
+		running = true
 	}
 
 	private fun stop()
 	{
+		if (!running)
+		{
+			Log.w("KeepAliveService", "Requested to stop, but not running")
+			return
+		}
+
 		// Stop the service and remove notification
 		stopForeground(true)
+		running = false
 	}
 
 	private fun startForeground()
@@ -131,5 +145,10 @@ class KeepAliveService : Service()
 	{
 		const val ACTION_START_SERVICE = "ACTION_START_SERVICE"
 		const val ACTION_STOP_SERVICE  = "ACTION_STOP_SERVICE"
+
+		private var running = false
+
+		val isRunning
+			get() = running
 	}
 }
