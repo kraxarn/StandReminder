@@ -31,10 +31,7 @@ class SettingsFragment : PreferenceFragmentCompat()
 	 * Custom date to string formatter
 	 */
 	val Calendar.asString
-		get() = if (Build.VERSION.SDK_INT >= 24)
-			SimpleDateFormat("yyyy-MM-dd HH:mm").format(this.time)
-		else
-			this.time.toString()
+		get() = CalendarTools.format(this, CalendarTools.Format.FULL)
 
 	override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?)
 	{
