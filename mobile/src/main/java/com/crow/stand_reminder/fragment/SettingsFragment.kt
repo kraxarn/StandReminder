@@ -2,6 +2,7 @@ package com.crow.stand_reminder.fragment
 
 import android.content.Intent
 import android.content.res.Configuration
+import android.icu.text.SimpleDateFormat
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
@@ -13,7 +14,7 @@ import com.crow.stand_reminder.*
 import com.crow.stand_reminder.R
 import com.crow.stand_reminder.tool.*
 import com.google.android.material.snackbar.Snackbar
-import java.io.Serializable
+import java.util.*
 import kotlin.concurrent.thread
 
 class SettingsFragment : PreferenceFragmentCompat()
@@ -25,6 +26,15 @@ class SettingsFragment : PreferenceFragmentCompat()
 		if (preference != null)
 			preference.onPreferenceClickListener = listener
 	}
+
+	/**
+	 * Custom date to string formatter
+	 */
+	val Calendar.asString
+		get() = if (Build.VERSION.SDK_INT >= 24)
+			SimpleDateFormat("yyyy-MM-dd HH:mm").format(this.time)
+		else
+			this.time.toString()
 
 	override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?)
 	{
@@ -114,7 +124,7 @@ class SettingsFragment : PreferenceFragmentCompat()
 						thread(true)
 						{
 							// Default value
-							val values = mutableListOf<Pair<String, String>>()
+							val values = mutableListOf<String>()
 							var title  = "No Values"
 
 							when (i)
@@ -123,7 +133,7 @@ class SettingsFragment : PreferenceFragmentCompat()
 								0 -> {
 									// Get the temporary values
 									values += DatabaseTools(context).getCompletedToday().map { v ->
-										Pair(v.date.toString(), v.source.name)
+										"${v.date.asString}: ${v.source.name}"
 									}
 									// Set values to show in dialog
 									title = "Today (${values.count()} values)"
@@ -131,7 +141,7 @@ class SettingsFragment : PreferenceFragmentCompat()
 								// This hour (get from temporary values)
 								1 -> {
 									values += StateManager.temporaryValues.map { v ->
-										Pair("value", v.toString())
+										v.toString()
 									}
 									title = "This Hour (${values.count()} values)"
 								}
