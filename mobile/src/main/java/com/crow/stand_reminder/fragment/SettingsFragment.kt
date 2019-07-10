@@ -152,31 +152,6 @@ class SettingsFragment : PreferenceFragmentCompat()
 				}
 			}
 
-			// To show values for today
-			/*
-			thread {
-				val values = StateManager.temporaryValues
-				val total  = StateManager.temporaryValues.count()
-
-				if (values.isEmpty())
-				{
-					activity?.runOnUiThread {
-						AlertTools.showSimple(context!!, "No values", "No values found for that day ($total total)")
-					}
-					return@thread
-				}
-
-				val builder = StringBuilder()
-				for (value in values)
-				{
-					builder.append("$value\n")
-				}
-				activity?.runOnUiThread {
-					AlertTools.showSimple(context!!, Date().toString(), builder.toString())
-				}
-			}
-			 */
-
 			true
 		})
 
