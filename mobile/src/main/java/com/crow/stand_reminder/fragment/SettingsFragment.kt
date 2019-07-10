@@ -12,6 +12,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.preference.*
 import com.crow.stand_reminder.*
 import com.crow.stand_reminder.R
+import com.crow.stand_reminder.service.KeepAliveService
 import com.crow.stand_reminder.tool.*
 import com.google.android.material.snackbar.Snackbar
 import java.util.*
@@ -166,16 +167,11 @@ class SettingsFragment : PreferenceFragmentCompat()
 		setOnPreferenceClickListener("debug_info", Preference.OnPreferenceClickListener {
 			thread {
 				// Get database to show stuffs later
-				//val db = DatabaseTools(context!!)
+				val db = DatabaseTools(context!!)
 				// Prepare message
-				/*
-				val message = "ServiceRunning=${KeepAliveService.isRunning()}\n" +
-						"FirstDate=${if (db.values().values.isEmpty()) { "Empty" } else { CalendarTools.format(db.values().valuesAddedAsc[0].added, CalendarTools.Format.DATE) }}\n" +
+				val message = "ServiceRunning=${KeepAliveService.isRunning}\n" +
+						"FirstCompleted=${db.firstCompleted.let { it ?: "None" }}\n" +
 						"InstanceDate=${CalendarTools.format(Calendar.getInstance(), CalendarTools.Format.DATE)}"
-
-				 */
-				// TODO: Temporary
-				val message = "invalid request"
 				// Show alert
 				activity?.runOnUiThread {
 					AlertTools.showSimple(context!!, "Debug Info", message)
